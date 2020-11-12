@@ -1,0 +1,19 @@
+button:active {
+    opacity: 0.5;
+}
+
+button:focus {
+    outline: 0;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+img:active {
+    opacity: 0.5;
+}
+
+img:hover {
+    opacity: 0.8;
+}
