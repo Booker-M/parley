@@ -384,9 +384,9 @@ export default class ChatBoard extends Component {
             <div className="viewStickers">
                 <img
                     className="imgSticker"
-                    src={images.mimi1}
+                    src={images.partyParrot}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi1', 2)}
+                    onClick={() => this.onSendMessage('partyParrot', 2)}
                 />
                 <img
                     className="imgSticker"
@@ -451,6 +451,8 @@ export default class ChatBoard extends Component {
 
     getGifImage = value => {
         switch (value) {
+            case 'partyParrot':
+                return images.partyParrot
             case 'mimi1':
                 return images.mimi1
             case 'mimi2':

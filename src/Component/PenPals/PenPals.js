@@ -3,12 +3,10 @@ import ReactLoading from 'react-loading'
 import {withRouter} from 'react-router-dom'
 import {myFirebase, myFirestore} from '../../Config/MyFirebase'
 import images from '../Themes/Images'
-import WelcomeBoard from '../WelcomeBoard/WelcomeBoard'
-import './Main.css'
-import ChatBoard from './../ChatBoard/ChatBoard'
+import './PenPals.css'
 import {AppString} from './../Const'
 
-class Main extends Component {
+class PenPals extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -104,7 +102,7 @@ class Main extends Component {
                             <div className="viewWrapContentItem">
                 <span className="textItem">{`${
                     item.data().nickname
-                    }`}</span>
+                    } | ${item.data().myLanguage}`}</span>
                                 <span className="textItem">{`About me: ${
                                     item.data().aboutMe ? item.data().aboutMe : 'Not available'
                                     }`}</span>
@@ -141,20 +139,7 @@ class Main extends Component {
 
                 {/* Body */}
                 <div className="body">
-                    <div className="viewListUser"> {this.renderListUser()}</div>
-                    <div className="viewBoard">
-                        {this.state.currentPeerUser ? (
-                            <ChatBoard
-                                currentPeerUser={this.state.currentPeerUser}
-                                showToast={this.props.showToast}
-                            />
-                        ) : (
-                            <WelcomeBoard
-                                currentUserNickname={this.currentUserNickname}
-                                currentUserAvatar={this.currentUserAvatar}
-                            />
-                        )}
-                    </div>
+                    <div className="viewListNonfriends"> {this.renderListUser()}</div>
                 </div>
 
                 {/* Dialog confirm */}
@@ -198,4 +183,4 @@ class Main extends Component {
     }
 }
 
-export default withRouter(Main)
+export default withRouter(PenPals)

@@ -3,6 +3,7 @@ import './Root.css'
 import {HashRouter as Router, Route, Switch} from 'react-router-dom'
 import Login from '../Login/Login'
 import Main from '../Main/Main'
+import PenPals from '../PenPals/PenPals'
 import Profile from '../Profile/Profile'
 import {toast, ToastContainer} from 'react-toastify'
 
@@ -40,6 +41,11 @@ class Root extends Component {
                             exact
                             path="/main"
                             render={props => <Main showToast={this.showToast} {...props} />}
+                        />
+                        <Route
+                            exact
+                            path="/penpals"
+                            render={props => <PenPals showToast={this.showToast} {...props} />}
                         />
                         <Route
                             exact
