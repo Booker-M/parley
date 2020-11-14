@@ -368,7 +368,7 @@ export default class ChatBoard extends Component {
         } else {
             return (
                 <div className="viewWrapSayHi">
-                    <span className="textSayHi">Say hi to new friend</span>
+                    <span className="textSayHi">Say ahoy to your new crewmate</span>
                     <img
                         className="imgWaveHand"
                         src={images.ic_wave_hand}

@@ -8,5 +8,7 @@ export const AppString = {
     NODE_USERS: 'users',
     UPLOAD_CHANGED: 'state_changed',
     DOC_ADDED: 'added',
-    PREFIX_IMAGE: 'image/'
+    PREFIX_IMAGE: 'image/',
+    PENDING: "pending",
+    FRIENDS: "friends"
 }

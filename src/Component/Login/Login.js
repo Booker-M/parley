@@ -63,6 +63,8 @@ class Login extends Component {
                                 localStorage.setItem(AppString.NICKNAME, user.displayName)
                                 localStorage.setItem(AppString.PHOTO_URL, user.photoURL)
                                 localStorage.setItem(AppString.MY_LANGUAGE, 'en')
+                                localStorage.setItem(AppString.PENDING, [])
+                                localStorage.setItem(AppString.FRIENDS, [])
                                 this.setState({isLoading: false}, () => {
                                     this.props.showToast(1, 'Login success')
                                     this.props.history.push('/main')

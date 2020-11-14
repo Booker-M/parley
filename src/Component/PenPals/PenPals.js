@@ -12,12 +12,19 @@ class PenPals extends Component {
         this.state = {
             isLoading: true,
             isOpenDialogConfirmLogout: false,
-            currentPeerUser: null
+            currentPeerUser: null,
+            listUser: [],
+            listPending: [],
+            listFriends: []
         }
         this.currentUserId = localStorage.getItem(AppString.ID)
         this.currentUserAvatar = localStorage.getItem(AppString.PHOTO_URL)
         this.currentUserNickname = localStorage.getItem(AppString.NICKNAME)
-        this.listUser = []
+        this.currentUserAboutMe = localStorage.getItem(AppString.ABOUT_ME)
+        this.currentUserMyLanguage = localStorage.getItem(AppString.MY_LANGUAGE)
+        // this.listUser = []
+        // this.listPending = []
+        // this.listFriends = []
     }
 
     componentDidMount() {
@@ -35,11 +42,15 @@ class PenPals extends Component {
     }
 
     getListUser = async () => {
-        const result = await myFirestore.collection(AppString.NODE_USERS).get()
-        if (result.docs.length > 0) {
-            this.listUser = [...result.docs]
-            this.setState({isLoading: false})
-        }
+        const allUsers = await myFirestore.collection(AppString.NODE_USERS).get()
+        this.state.listUser = allUsers.docs.length > 0 ? [...allUsers.docs] : []
+        const myPending = await myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.PENDING).get()
+        this.state.listPending = myPending.docs.length > 0 ? [...myPending.docs] : []
+        const myFriends = await myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.FRIENDS).get()
+        this.state.listFriends = myFriends.docs.length > 0 ? [...myFriends.docs] : []
+        this.setState({isLoading: false})
+        console.log(this.state.listUser.data())
+        console.log(this.state.listPending.data())
     }
 
     onLogoutClick = () => {
@@ -76,38 +87,91 @@ class PenPals extends Component {
         this.props.history.push('/profile')
     }
 
-    renderListUser = () => {
-        if (this.listUser.length > 0) {
+    sendInvite = (user) => {
+        this.setState({isLoading: true})
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(user.id)
+            .collection(AppString.PENDING)
+            .doc(this.currentUserId)
+            .set({id: this.currentUserId}).then(
+        this.getListUser())
+    }
+
+    acceptInvite = (user) => {
+        this.setState({isLoading: true})
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(this.currentUserId)
+            .collection(AppString.FRIENDS)
+            .doc(user.id)
+            .set({id: user.id}).then(
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(user.id)
+            .collection(AppString.FRIENDS)
+            .doc(this.currentUserId)
+            .set({id: this.currentUserId})).then(
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(this.currentUserId)
+            .collection(AppString.PENDING)
+            .doc(user.id)
+            .delete()).then(
+        this.getListUser())
+    }
+
+    declineInvite = (user) => {
+        this.setState({isLoading: true})
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(this.currentUserId)
+            .collection(AppString.PENDING)
+            .doc(user.id)
+            .delete().then(
+        this.getListUser())
+    }
+
+    report = (user) => {
+
+    }
+
+    renderListUser = (name, list) => {
+        // console.log(myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.PENDING))
+        // !list.includes(item.id)
+        let filteredList = []//name === "Nonfriends" ? myFirestore.collection(AppString.NODE_USERS).where("id", "in", myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.PENDING)) : this.state.listUser.filter(item => list.includes(item.id))
+        if (filteredList.length > 0) {
             let viewListUser = []
-            this.listUser.forEach((item, index) => {
+            filteredList.forEach((item, index) => {
                 if (item.data().id !== this.currentUserId) {
                     viewListUser.push(
-                        <button
+                        <div
                             key={index}
                             className={
                                 this.state.currentPeerUser &&
                                 this.state.currentPeerUser.id === item.data().id
-                                    ? 'viewWrapItemFocused'
-                                    : 'viewWrapItem'
+                                    ? 'viewWrapItemFocusedPenpal'
+                                    : 'viewWrapItemPenpal'
                             }
-                            onClick={() => {
-                                this.setState({currentPeerUser: item.data()})
-                            }}
                         >
                             <img
-                                className="viewAvatarItem"
+                                className="viewAvatarItemPenpal"
                                 src={item.data().photoUrl}
                                 alt="icon avatar"
                             />
                             <div className="viewWrapContentItem">
-                <span className="textItem">{`${
-                    item.data().nickname
-                    } | ${item.data().myLanguage}`}</span>
-                                <span className="textItem">{`About me: ${
-                                    item.data().aboutMe ? item.data().aboutMe : 'Not available'
-                                    }`}</span>
+                                <span className="textItem">{`${
+                                    item.data().nickname
+                                    } | ${item.data().myLanguage}`}</span>
+                                                <span className="textItem">{`About me: ${
+                                                    item.data().aboutMe ? item.data().aboutMe : 'Not available'
+                                                    }`}</span>
                             </div>
-                        </button>
+                            <button className="btnNo" onClick={() => name  === "Nonfriends" ? this.report(item) : this.declineInvite(item)}>
+                                {name === "Nonfriends" ? "Report" : "Decline Crew Invite"}</button>
+                            <button className="btnYes" onClick={() => name  === "Nonfriends" ? this.sendInvite(item) : this.acceptInvite(item)}>
+                                {name === "Nonfriends" ? "Send Crew Invite" : "Accept Crew Invite"}</button>
+                        </div>
                     )
                 }
             })
@@ -138,8 +202,11 @@ class PenPals extends Component {
                 </div>
 
                 {/* Body */}
-                <div className="body">
-                    <div className="viewListNonfriends"> {this.renderListUser()}</div>
+                <div className="bodyPenpal">
+                    <span className="heading">{this.state.listPending.length > 0 ? "Pending Crewmates" : ""}</span>
+                    <div className="viewListNonfriends"> {this.renderListUser("Pending", this.state.listPending)}</div>
+                    <span className="heading">Recruit Your Crew</span>
+                    <div className="viewListNonfriends"> {this.renderListUser("Nonfriends", this.state.listFriends)}</div>
                 </div>
 
                 {/* Dialog confirm */}

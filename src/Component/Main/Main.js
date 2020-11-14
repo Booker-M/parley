@@ -183,7 +183,7 @@ class Main extends Component {
         return (
             <div>
                 <div className="viewWrapTextDialogConfirmLogout">
-                    <span className="titleDialogConfirmLogout">Are you sure to logout?</span>
+                    <span className="titleDialogConfirmLogout">Are you ready to logout?</span>
                 </div>
                 <div className="viewWrapButtonDialogConfirmLogout">
                     <button className="btnYes" onClick={this.doLogout}>

@@ -185,7 +185,7 @@ class Profile extends Component {
                     Update
                 </button>
 
-                {this.state.isLoading || this.state.languages.length == 0 ? (
+                {this.state.isLoading || this.state.languages.length === 0 ? (
                     <div className="viewLoading">
                         <ReactLoading
                             type={'spin'}
