@@ -10,5 +10,6 @@ export const AppString = {
     DOC_ADDED: 'added',
     PREFIX_IMAGE: 'image/',
     PENDING: "pending",
-    FRIENDS: "friends"
+    FRIENDS: "friends",
+    REQUESTED: "requested"
 }

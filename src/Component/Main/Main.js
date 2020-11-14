@@ -14,12 +14,13 @@ class Main extends Component {
         this.state = {
             isLoading: true,
             isOpenDialogConfirmLogout: false,
-            currentPeerUser: null
+            currentPeerUser: null,
+            listUser: [],
+            listFriends: []
         }
         this.currentUserId = localStorage.getItem(AppString.ID)
         this.currentUserAvatar = localStorage.getItem(AppString.PHOTO_URL)
         this.currentUserNickname = localStorage.getItem(AppString.NICKNAME)
-        this.listUser = []
     }
 
     componentDidMount() {
@@ -37,11 +38,11 @@ class Main extends Component {
     }
 
     getListUser = async () => {
-        const result = await myFirestore.collection(AppString.NODE_USERS).get()
-        if (result.docs.length > 0) {
-            this.listUser = [...result.docs]
-            this.setState({isLoading: false})
-        }
+        const allUsers = await myFirestore.collection(AppString.NODE_USERS).get()
+        this.state.listUser = allUsers.docs.length > 0 ? [...allUsers.docs] : []
+        const myFriends = await myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.FRIENDS).get()
+        this.state.listFriends = myFriends.docs.length > 0 ? [...myFriends.docs] : []
+        this.setState({isLoading: false})
     }
 
     onLogoutClick = () => {
@@ -74,14 +75,27 @@ class Main extends Component {
         })
     }
 
+    onMessageClick = () => {
+        this.props.history.push('/main')
+    }
+
+    onCrewClick = () => {
+        this.props.history.push('/crew')
+    }
+
     onProfileClick = () => {
         this.props.history.push('/profile')
     }
 
     renderListUser = () => {
-        if (this.listUser.length > 0) {
+        let ids = []
+        this.state.listFriends.forEach((item, index) => {
+            ids.push(item.id)
+        })
+        let filteredList = this.state.listUser.filter(item => ids.includes(item.id))
+        if (filteredList.length > 0) {
             let viewListUser = []
-            this.listUser.forEach((item, index) => {
+            filteredList.forEach((item, index) => {
                 if (item.data().id !== this.currentUserId) {
                     viewListUser.push(
                         <button
@@ -125,6 +139,18 @@ class Main extends Component {
                 {/* Header */}
                 <div className="header">
                     <span>Parley</span>
+                    <img
+                        className="icMessage"
+                        alt="An icon message"
+                        src={images.ic_message}
+                        onClick={this.onMessageClick}
+                    />
+                    <img
+                        className="icCrew"
+                        alt="An icon crew"
+                        src={images.ic_crew}
+                        onClick={this.onCrewClick}
+                    />
                     <img
                         className="icProfile"
                         alt="An icon default avatar"

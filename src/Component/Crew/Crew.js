@@ -3,10 +3,10 @@ import ReactLoading from 'react-loading'
 import {withRouter} from 'react-router-dom'
 import {myFirebase, myFirestore} from '../../Config/MyFirebase'
 import images from '../Themes/Images'
-import './PenPals.css'
+import './Crew.css'
 import {AppString} from './../Const'
 
-class PenPals extends Component {
+class Crew extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -15,16 +15,14 @@ class PenPals extends Component {
             currentPeerUser: null,
             listUser: [],
             listPending: [],
-            listFriends: []
+            listFriends: [],
+            listRequested: []
         }
         this.currentUserId = localStorage.getItem(AppString.ID)
         this.currentUserAvatar = localStorage.getItem(AppString.PHOTO_URL)
         this.currentUserNickname = localStorage.getItem(AppString.NICKNAME)
         this.currentUserAboutMe = localStorage.getItem(AppString.ABOUT_ME)
         this.currentUserMyLanguage = localStorage.getItem(AppString.MY_LANGUAGE)
-        // this.listUser = []
-        // this.listPending = []
-        // this.listFriends = []
     }
 
     componentDidMount() {
@@ -48,9 +46,9 @@ class PenPals extends Component {
         this.state.listPending = myPending.docs.length > 0 ? [...myPending.docs] : []
         const myFriends = await myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.FRIENDS).get()
         this.state.listFriends = myFriends.docs.length > 0 ? [...myFriends.docs] : []
+        const myRequested = await myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.REQUESTED).get()
+        this.state.listRequested = myRequested.docs.length > 0 ? [...myRequested.docs] : []
         this.setState({isLoading: false})
-        console.log(this.state.listUser.data())
-        console.log(this.state.listPending.data())
     }
 
     onLogoutClick = () => {
@@ -83,6 +81,14 @@ class PenPals extends Component {
         })
     }
 
+    onMessageClick = () => {
+        this.props.history.push('/main')
+    }
+
+    onCrewClick = () => {
+        this.props.history.push('/crew')
+    }
+
     onProfileClick = () => {
         this.props.history.push('/profile')
     }
@@ -91,10 +97,16 @@ class PenPals extends Component {
         this.setState({isLoading: true})
         myFirestore
             .collection(AppString.NODE_USERS)
+            .doc(this.currentUserId)
+            .collection(AppString.REQUESTED)
+            .doc(user.id)
+            .set({id: user.id}).then(
+        myFirestore
+            .collection(AppString.NODE_USERS)
             .doc(user.id)
             .collection(AppString.PENDING)
             .doc(this.currentUserId)
-            .set({id: this.currentUserId}).then(
+            .set({id: this.currentUserId})).then(
         this.getListUser())
     }
 
@@ -114,6 +126,12 @@ class PenPals extends Component {
             .set({id: this.currentUserId})).then(
         myFirestore
             .collection(AppString.NODE_USERS)
+            .doc(user.id)
+            .collection(AppString.REQUESTED)
+            .doc(this.currentUserId)
+            .delete()).then(
+        myFirestore
+            .collection(AppString.NODE_USERS)
             .doc(this.currentUserId)
             .collection(AppString.PENDING)
             .doc(user.id)
@@ -129,6 +147,12 @@ class PenPals extends Component {
             .collection(AppString.PENDING)
             .doc(user.id)
             .delete().then(
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(user.id)
+            .collection(AppString.REQUESTED)
+            .doc(this.currentUserId)
+            .delete()).then(
         this.getListUser())
     }
 
@@ -136,10 +160,18 @@ class PenPals extends Component {
 
     }
 
-    renderListUser = (name, list) => {
-        // console.log(myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.PENDING))
-        // !list.includes(item.id)
-        let filteredList = []//name === "Nonfriends" ? myFirestore.collection(AppString.NODE_USERS).where("id", "in", myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.PENDING)) : this.state.listUser.filter(item => list.includes(item.id))
+    renderListUser = (name, ...lists) => {
+        let ids = []
+        lists.forEach(list => {
+            list.forEach((item, index) => {
+                ids.push(item.id)
+            })
+        })
+        let requestedIds = []
+        this.state.listRequested.forEach((item, index) => {
+            requestedIds.push(item.id)
+        })
+        let filteredList = name === "Nonfriends" ? this.state.listUser.filter(item => !ids.includes(item.id)) : this.state.listUser.filter(item => ids.includes(item.id))
         if (filteredList.length > 0) {
             let viewListUser = []
             filteredList.forEach((item, index) => {
@@ -169,8 +201,10 @@ class PenPals extends Component {
                             </div>
                             <button className="btnNo" onClick={() => name  === "Nonfriends" ? this.report(item) : this.declineInvite(item)}>
                                 {name === "Nonfriends" ? "Report" : "Decline Crew Invite"}</button>
-                            <button className="btnYes" onClick={() => name  === "Nonfriends" ? this.sendInvite(item) : this.acceptInvite(item)}>
-                                {name === "Nonfriends" ? "Send Crew Invite" : "Accept Crew Invite"}</button>
+                            <button className="btnYes" onClick={() => name  === "Nonfriends" ? 
+                                (requestedIds.includes(item.id) ? () => {} : this.sendInvite(item)) : this.acceptInvite(item)}>
+                            {name === "Nonfriends" ? 
+                                (requestedIds.includes(item.id) ? "Pending Invite" : "Send Crew Invite") : "Accept Crew Invite"}</button>
                         </div>
                     )
                 }
@@ -187,6 +221,18 @@ class PenPals extends Component {
                 {/* Header */}
                 <div className="header">
                     <span>Parley</span>
+                    <img
+                        className="icMessage"
+                        alt="An icon message"
+                        src={images.ic_message}
+                        onClick={this.onMessageClick}
+                    />
+                    <img
+                        className="icCrew"
+                        alt="An icon crew"
+                        src={images.ic_crew}
+                        onClick={this.onCrewClick}
+                    />
                     <img
                         className="icProfile"
                         alt="An icon default avatar"
@@ -206,7 +252,7 @@ class PenPals extends Component {
                     <span className="heading">{this.state.listPending.length > 0 ? "Pending Crewmates" : ""}</span>
                     <div className="viewListNonfriends"> {this.renderListUser("Pending", this.state.listPending)}</div>
                     <span className="heading">Recruit Your Crew</span>
-                    <div className="viewListNonfriends"> {this.renderListUser("Nonfriends", this.state.listFriends)}</div>
+                    <div className="viewListNonfriends"> {this.renderListUser("Nonfriends", this.state.listFriends, this.state.listPending)}</div>
                 </div>
 
                 {/* Dialog confirm */}
@@ -250,4 +296,4 @@ class PenPals extends Component {
     }
 }
 
-export default withRouter(PenPals)
+export default withRouter(Crew)
