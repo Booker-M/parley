@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/parley/static/css/main.462a8ab8.chunk.css",
-    "main.js": "/parley/static/js/main.abf37d91.chunk.js",
-    "main.js.map": "/parley/static/js/main.abf37d91.chunk.js.map",
+    "main.css": "/parley/static/css/main.7011e697.chunk.css",
+    "main.js": "/parley/static/js/main.8de023d0.chunk.js",
+    "main.js.map": "/parley/static/js/main.8de023d0.chunk.js.map",
     "runtime-main.js": "/parley/static/js/runtime-main.e1770dcc.js",
     "runtime-main.js.map": "/parley/static/js/runtime-main.e1770dcc.js.map",
     "static/css/2.ffcf707b.chunk.css": "/parley/static/css/2.ffcf707b.chunk.css",
-    "static/js/2.14fcac1c.chunk.js": "/parley/static/js/2.14fcac1c.chunk.js",
-    "static/js/2.14fcac1c.chunk.js.map": "/parley/static/js/2.14fcac1c.chunk.js.map",
+    "static/js/2.9d7c91b9.chunk.js": "/parley/static/js/2.9d7c91b9.chunk.js",
+    "static/js/2.9d7c91b9.chunk.js.map": "/parley/static/js/2.9d7c91b9.chunk.js.map",
     "index.html": "/parley/index.html",
-    "precache-manifest.96e7cb9f3ac28ad956491e81d04c790e.js": "/parley/precache-manifest.96e7cb9f3ac28ad956491e81d04c790e.js",
+    "precache-manifest.7df50730803f3ba5ce20ad68e1365a19.js": "/parley/precache-manifest.7df50730803f3ba5ce20ad68e1365a19.js",
     "service-worker.js": "/parley/service-worker.js",
     "static/css/2.ffcf707b.chunk.css.map": "/parley/static/css/2.ffcf707b.chunk.css.map",
-    "static/css/main.462a8ab8.chunk.css.map": "/parley/static/css/main.462a8ab8.chunk.css.map",
-    "static/js/2.14fcac1c.chunk.js.LICENSE.txt": "/parley/static/js/2.14fcac1c.chunk.js.LICENSE.txt",
+    "static/css/main.7011e697.chunk.css.map": "/parley/static/css/main.7011e697.chunk.css.map",
+    "static/js/2.9d7c91b9.chunk.js.LICENSE.txt": "/parley/static/js/2.9d7c91b9.chunk.js.LICENSE.txt",
     "static/media/ic_crew.png": "/parley/static/media/ic_crew.9ec46ae5.png",
     "static/media/ic_wave_hand.png": "/parley/static/media/ic_wave_hand.9299706f.png",
     "static/media/mimi1.gif": "/parley/static/media/mimi1.477fc8dd.gif",
@@ -25,13 +25,14 @@
     "static/media/mimi7.gif": "/parley/static/media/mimi7.ace546bd.gif",
     "static/media/mimi8.gif": "/parley/static/media/mimi8.6646a3de.gif",
     "static/media/mimi9.gif": "/parley/static/media/mimi9.b5ec7c32.gif",
+    "static/media/parrot.png": "/parley/static/media/parrot.501f90e0.png",
     "static/media/partyParrot.gif": "/parley/static/media/partyParrot.59c3edcb.gif"
   },
   "entrypoints": [
     "static/js/runtime-main.e1770dcc.js",
     "static/css/2.ffcf707b.chunk.css",
-    "static/js/2.14fcac1c.chunk.js",
-    "static/css/main.462a8ab8.chunk.css",
-    "static/js/main.abf37d91.chunk.js"
+    "static/js/2.9d7c91b9.chunk.js",
+    "static/css/main.7011e697.chunk.css",
+    "static/js/main.8de023d0.chunk.js"
   ]
 }
