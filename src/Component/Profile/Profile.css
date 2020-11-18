@@ -14,61 +14,6 @@
     justify-content: center;
 }
 
-.header {
-    font-weight: bold;
-    font-size: 20px;
-    color: white;
-    background-color: #296972;
-    padding: 20px;
-    box-shadow: 0px 4px 4px #808888;
-}
-
-.icMessage {
-    width: 30px;
-    height: 30px;
-    /* width: 25px;
-    height: 25px; */
-    position: absolute;
-    right: 0;
-    margin-right: 180px;
-    cursor: pointer;
-}
-
-.icCrew {
-    width: 30px;
-    height: 30px;
-    /* width: 25px;
-    height: 25px; */
-    position: absolute;
-    right: 0;
-    margin-right: 130px;
-    cursor: pointer;
-    border-radius: 50px;
-}
-
-.icLogout {
-    width: 30px;
-    height: 30px;
-    /* width: 25px;
-    height: 25px; */
-    position: absolute;
-    right: 0;
-    margin-right: 30px;
-    cursor: pointer;
-}
-
-.icProfile {
-    width: 30px;
-    height: 30px;
-    /* width: 25px;
-    height: 25px; */
-    position: absolute;
-    right: 0;
-    margin-right: 80px;
-    cursor: pointer;
-    border-radius: 50px;
-}
-
 .avatar {
     width: 120px;
     height: 120px;

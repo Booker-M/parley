@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 import ReactLoading from 'react-loading'
 import {withRouter} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
-import {myFirebase, myFirestore, myStorage} from '../../Config/MyFirebase'
+import {myFirestore, myStorage} from '../../Config/MyFirebase'
 import images from './../Themes/Images'
 import './Profile.css'
 import {AppString} from './../Const'
 import {listLanguagesWithTarget} from '../../Config/MyTranslate.js'
+import Header from './../Header/Header'
 
 class Profile extends Component {
     constructor(props) {
@@ -37,48 +38,6 @@ class Profile extends Component {
         if (!localStorage.getItem(AppString.ID)) {
             this.props.history.push('/')
         }
-    }
-
-    onLogoutClick = () => {
-        this.setState({
-            isOpenDialogConfirmLogout: true
-        })
-    }
-
-    doLogout = () => {
-        this.setState({isLoading: true})
-        myFirebase
-            .auth()
-            .signOut()
-            .then(() => {
-                this.setState({isLoading: false}, () => {
-                    localStorage.clear()
-                    this.props.showToast(1, 'Logout success')
-                    this.props.history.push('/')
-                })
-            })
-            .catch(function (err) {
-                this.setState({isLoading: false})
-                this.props.showToast(0, err.message)
-            })
-    }
-
-    hideDialogConfirmLogout = () => {
-        this.setState({
-            isOpenDialogConfirmLogout: false
-        })
-    }
-
-    onMessageClick = () => {
-        this.props.history.push('/main')
-    }
-
-    onCrewClick = () => {
-        this.props.history.push('/crew')
-    }
-
-    onProfileClick = () => {
-        this.props.history.push('/profile')
     }
 
     onChangeNickname = event => {
@@ -168,34 +127,10 @@ class Profile extends Component {
     render() {
         return (
             <div className="root">
-                {/* Header */}
-                <div className="header">
-                    <span>Parley</span>
-                    <img
-                        className="icMessage"
-                        alt="An icon message"
-                        src={images.ic_message}
-                        onClick={this.onMessageClick}
-                    />
-                    <img
-                        className="icCrew"
-                        alt="An icon crew"
-                        src={images.ic_crew}
-                        onClick={this.onCrewClick}
-                    />
-                    <img
-                        className="icProfile"
-                        alt="An icon default avatar"
-                        src={this.state.photoUrl}
-                        onClick={this.onProfileClick}
-                    />
-                    <img
-                        className="icLogout"
-                        alt="An icon logout"
-                        src={images.ic_logout}
-                        onClick={this.onLogoutClick}
-                    />
-                </div>
+                <Header
+                    showToast={this.props.showToast}
+                    history={this.props.history}
+                />
 
                 <img className="avatar" alt="Avatar" src={this.state.photoUrl}/>
 
@@ -252,13 +187,6 @@ class Profile extends Component {
                     Update
                 </button>
 
-                {/* Dialog confirm */}
-                {this.state.isOpenDialogConfirmLogout ? (
-                    <div className="viewCoverScreen">
-                        {this.renderDialogConfirmLogout()}
-                    </div>
-                ) : null}
-
                 {this.state.isLoading || this.state.languages.length === 0 ? (
                     <div className="viewLoading">
                         <ReactLoading
@@ -269,24 +197,6 @@ class Profile extends Component {
                         />
                     </div>
                 ) : null}
-            </div>
-        )
-    }
-
-    renderDialogConfirmLogout = () => {
-        return (
-            <div>
-                <div className="viewWrapTextDialogConfirmLogout">
-                    <span className="titleDialogConfirmLogout">Are you ready to logout?</span>
-                </div>
-                <div className="viewWrapButtonDialogConfirmLogout">
-                    <button className="btnYes" onClick={this.doLogout}>
-                        Yes
-                    </button>
-                    <button className="btnNo" onClick={this.hideDialogConfirmLogout}>
-                        Cancel
-                    </button>
-                </div>
             </div>
         )
     }

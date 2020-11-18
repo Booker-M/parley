@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import ReactLoading from 'react-loading'
 import {withRouter} from 'react-router-dom'
-import {myFirebase, myFirestore} from '../../Config/MyFirebase'
-import images from '../Themes/Images'
+import {myFirestore} from '../../Config/MyFirebase'
 import './Crew.css'
 import {AppString} from './../Const'
+import Header from './../Header/Header'
 
 class Crew extends Component {
     constructor(props) {
         super(props)
         this.state = {
             isLoading: true,
-            isOpenDialogConfirmLogout: false,
+            isOpenReportConfirm: false,
             currentPeerUser: null,
             listUser: [],
             listPending: [],
@@ -23,6 +23,7 @@ class Crew extends Component {
         this.currentUserNickname = localStorage.getItem(AppString.NICKNAME)
         this.currentUserAboutMe = localStorage.getItem(AppString.ABOUT_ME)
         this.currentUserMyLanguage = localStorage.getItem(AppString.MY_LANGUAGE)
+        this.reportedUser = "";
     }
 
     componentDidMount() {
@@ -49,48 +50,6 @@ class Crew extends Component {
         const myRequested = await myFirestore.collection(AppString.NODE_USERS).doc(this.currentUserId).collection(AppString.REQUESTED).get()
         this.state.listRequested = myRequested.docs.length > 0 ? [...myRequested.docs] : []
         this.setState({isLoading: false})
-    }
-
-    onLogoutClick = () => {
-        this.setState({
-            isOpenDialogConfirmLogout: true
-        })
-    }
-
-    doLogout = () => {
-        this.setState({isLoading: true})
-        myFirebase
-            .auth()
-            .signOut()
-            .then(() => {
-                this.setState({isLoading: false}, () => {
-                    localStorage.clear()
-                    this.props.showToast(1, 'Logout success')
-                    this.props.history.push('/')
-                })
-            })
-            .catch(function (err) {
-                this.setState({isLoading: false})
-                this.props.showToast(0, err.message)
-            })
-    }
-
-    hideDialogConfirmLogout = () => {
-        this.setState({
-            isOpenDialogConfirmLogout: false
-        })
-    }
-
-    onMessageClick = () => {
-        this.props.history.push('/main')
-    }
-
-    onCrewClick = () => {
-        this.props.history.push('/crew')
-    }
-
-    onProfileClick = () => {
-        this.props.history.push('/profile')
     }
 
     sendInvite = (user) => {
@@ -157,7 +116,32 @@ class Crew extends Component {
     }
 
     report = (user) => {
+        this.reportedUser = user.data().nickname;
+        this.setState({isOpenReportConfirm: true})
+    }
 
+    renderReportConfirm = () => {
+        return (
+            <div>
+                <div className="viewWrapTextDialogConfirmLogout">
+        <span className="titleDialogConfirmLogout">Are you sure you want to report {this.reportedUser}?</span>
+                </div>
+                <div className="viewWrapButtonDialogConfirmLogout">
+                    <button className="btnYes" onClick={this.hideReportConfirm}>
+                        Yes
+                    </button>
+                    <button className="btnNo" onClick={this.hideReportConfirm}>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
+    hideReportConfirm = () => {
+        this.setState({
+            isOpenReportConfirm: false
+        })
     }
 
     renderListUser = (name, ...lists) => {
@@ -199,9 +183,9 @@ class Crew extends Component {
                                                     item.data().aboutMe ? item.data().aboutMe : 'Not available'
                                                     }`}</span>
                             </div>
-                            <button className="btnNo" onClick={() => name  === "Nonfriends" ? this.report(item) : this.declineInvite(item)}>
+                            <button className="btnCrewNo" onClick={() => name  === "Nonfriends" ? this.report(item) : this.declineInvite(item)}>
                                 {name === "Nonfriends" ? "Report" : "Decline Crew Invite"}</button>
-                            <button className="btnYes" onClick={() => name  === "Nonfriends" ? 
+                            <button className="btnCrewYes" onClick={() => name  === "Nonfriends" ? 
                                 (requestedIds.includes(item.id) ? () => {} : this.sendInvite(item)) : this.acceptInvite(item)}>
                             {name === "Nonfriends" ? 
                                 (requestedIds.includes(item.id) ? "Pending Invite" : "Send Crew Invite") : "Accept Crew Invite"}</button>
@@ -218,34 +202,10 @@ class Crew extends Component {
     render() {
         return (
             <div className="root">
-                {/* Header */}
-                <div className="header">
-                    <span>Parley</span>
-                    <img
-                        className="icMessage"
-                        alt="An icon message"
-                        src={images.ic_message}
-                        onClick={this.onMessageClick}
-                    />
-                    <img
-                        className="icCrew"
-                        alt="An icon crew"
-                        src={images.ic_crew}
-                        onClick={this.onCrewClick}
-                    />
-                    <img
-                        className="icProfile"
-                        alt="An icon default avatar"
-                        src={this.currentUserAvatar}
-                        onClick={this.onProfileClick}
-                    />
-                    <img
-                        className="icLogout"
-                        alt="An icon logout"
-                        src={images.ic_logout}
-                        onClick={this.onLogoutClick}
-                    />
-                </div>
+                <Header
+                    showToast={this.props.showToast}
+                    history={this.props.history}
+                />
 
                 {/* Body */}
                 <div className="bodyPenpal">
@@ -256,9 +216,9 @@ class Crew extends Component {
                 </div>
 
                 {/* Dialog confirm */}
-                {this.state.isOpenDialogConfirmLogout ? (
+                {this.state.isOpenReportConfirm ? (
                     <div className="viewCoverScreen">
-                        {this.renderDialogConfirmLogout()}
+                        {this.renderReportConfirm()}
                     </div>
                 ) : null}
 
@@ -273,24 +233,6 @@ class Crew extends Component {
                         />
                     </div>
                 ) : null}
-            </div>
-        )
-    }
-
-    renderDialogConfirmLogout = () => {
-        return (
-            <div>
-                <div className="viewWrapTextDialogConfirmLogout">
-                    <span className="titleDialogConfirmLogout">Are you sure to logout?</span>
-                </div>
-                <div className="viewWrapButtonDialogConfirmLogout">
-                    <button className="btnYes" onClick={this.doLogout}>
-                        Yes
-                    </button>
-                    <button className="btnNo" onClick={this.hideDialogConfirmLogout}>
-                        Cancel
-                    </button>
-                </div>
             </div>
         )
     }

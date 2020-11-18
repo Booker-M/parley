@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import {myFirebase, myFirestore} from '../../Config/MyFirebase'
 import './Login.css'
 import {AppString} from './../Const'
+import Header from './../Header/Header'
 
 class Login extends Component {
     constructor(props) {
@@ -107,7 +108,12 @@ class Login extends Component {
     render() {
         return (
             <div className="viewRoot">
-                <div className="header">Parley</div>
+                <Header
+                    showToast={this.props.showToast}
+                    history={this.props.history}
+                    login={true}
+                />
+
                 <button className="btnLogin" type="submit" onClick={this.onLoginPress}>
                     Sign in with Google
                 </button>

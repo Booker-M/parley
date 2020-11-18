@@ -4,16 +4,6 @@
     display: flex;
 }
 
-.header {
-    font-weight: bold;
-    font-size: 20px;
-    color: white;
-    background-color: #296972;
-    padding: 20px;
-    box-shadow: 0 4px 4px #808888;
-    flex-direction: row;
-}
-
 .bodyPenpal {
     display: flex;
     flex-direction: column;
@@ -33,129 +23,11 @@
     justify-content: center;
 }
 
-.icMessage {
-    width: 30px;
-    height: 30px;
-    /* width: 25px;
-    height: 25px; */
-    position: absolute;
-    right: 0;
-    margin-right: 180px;
-    cursor: pointer;
-}
-
-.icCrew {
-    width: 30px;
-    height: 30px;
-    /* width: 25px;
-    height: 25px; */
-    position: absolute;
-    right: 0;
-    margin-right: 130px;
-    cursor: pointer;
-    border-radius: 50px;
-}
-
-.icLogout {
-    width: 30px;
-    height: 30px;
-    /* width: 25px;
-    height: 25px; */
-    position: absolute;
-    right: 0;
-    margin-right: 30px;
-    cursor: pointer;
-}
-
-.icProfile {
-    width: 30px;
-    height: 30px;
-    /* width: 25px;
-    height: 25px; */
-    position: absolute;
-    right: 0;
-    margin-right: 80px;
-    cursor: pointer;
-    border-radius: 50px;
-}
-
 .heading {
     font-weight: bold;
     font-size: 20px;
+    color: #296972;
     padding: 5px;
-}
-
-/* Dialog confirm */
-
-.viewCoverScreen {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.viewWrapTextDialogConfirmLogout {
-    width: 300px;
-    height: 50px;
-    background-color:#54b7d7;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center
-}
-
-.titleDialogConfirmLogout {
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.viewWrapButtonDialogConfirmLogout {
-    flex-direction: row;
-    height: 100px;
-    width: 300px;
-    min-width: 300px;
-    background-color: white;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-}
-
-.btnYes {
-    width: 100px;
-    height: 40px;
-    font-weight: bold;
-    margin-left: 20px;
-    margin-right: 20px;
-    background-color: #54b7d7;
-    border: 0px;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btnNo {
-    width: 100px;
-    height: 40px;
-    font-weight: bold;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 5px;
-    background-color: #ea493f;
-    border: 0px;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: 0.3s;
 }
 
 /* List user */
@@ -238,4 +110,76 @@
     display: flex;
     flex: 1;
     height: 90vh;
+}
+
+/* Dialog confirm */
+
+.viewCoverScreen {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.viewWrapTextDialogConfirmLogout {
+    width: 300px;
+    height: 50px;
+    background-color:#54b7d7;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.titleDialogConfirmLogout {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.viewWrapButtonDialogConfirmLogout {
+    flex-direction: row;
+    height: 100px;
+    width: 300px;
+    min-width: 300px;
+    background-color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.btnCrewYes {
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    margin-right: 20px;
+    background-color: #54b7d7;
+    border: 0px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btnCrewNo {
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px;
+    background-color: #ea493f;
+    border: 0px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
 }

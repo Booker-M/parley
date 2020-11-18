@@ -8,6 +8,7 @@ const images = {
     ic_wave_hand: require('../../images/ic_wave_hand.png'),
     ic_crew: require('../../images/ic_crew.png'),
     ic_message: require('../../images/ic_message.png'),
+    parrot: require('../../images/parrot.png'),
 
     partyParrot: require('../../images/partyParrot.gif'),
     mimi1: require('../../images/mimi1.gif'),
