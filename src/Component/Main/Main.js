@@ -105,7 +105,6 @@ class Main extends Component {
                         {this.state.currentPeerUser ? (
                             <ChatBoard
                                 currentPeerUser={this.state.currentPeerUser}
-                                showToast={this.props.showToast}
                             />
                         ) : (
                             <WelcomeBoard
