@@ -73,12 +73,9 @@ class Main extends Component {
                                 alt="icon avatar"
                             />
                             <div className="viewWrapContentItem">
-                <span className="textItem">{`${
-                    item.data().nickname
-                    }`}</span>
-                                <span className="textItem">{`About me: ${
-                                    item.data().aboutMe ? item.data().aboutMe : 'Not available'
-                                    }`}</span>
+                                <span className="textItem">{`${
+                                    item.data().nickname
+                                }`}</span>
                             </div>
                         </button>
                     )

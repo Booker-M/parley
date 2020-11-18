@@ -178,10 +178,10 @@ class Crew extends Component {
                             <div className="viewWrapContentItem">
                                 <span className="textItem">{`${
                                     item.data().nickname
-                                    } | ${item.data().myLanguage}`}</span>
-                                                <span className="textItem">{`About me: ${
-                                                    item.data().aboutMe ? item.data().aboutMe : 'Not available'
-                                                    }`}</span>
+                                } | ${item.data().myLanguage}`}</span>
+                                <span className="textItem">{`About me: ${
+                                    item.data().aboutMe ? item.data().aboutMe : 'Not available'
+                                }`}</span>
                             </div>
                             <button className="btnCrewNo" onClick={() => name  === "Nonfriends" ? this.report(item) : this.declineInvite(item)}>
                                 {name === "Nonfriends" ? "Report" : "Decline Crew Invite"}</button>
