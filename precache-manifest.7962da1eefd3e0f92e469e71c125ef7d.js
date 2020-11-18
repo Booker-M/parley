@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c1db6c88a2da34a540205287f60c0ebe",
+    "revision": "a9e9ad84e93838ee5b2b2214ebc4b27d",
     "url": "/parley/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/parley/static/css/2.ffcf707b.chunk.css"
   },
   {
-    "revision": "2ae6895304328304d161",
-    "url": "/parley/static/css/main.7011e697.chunk.css"
+    "revision": "c8092d0ac3e326331321",
+    "url": "/parley/static/css/main.39ef257d.chunk.css"
   },
   {
     "revision": "8b204d4efb744dad79d0",
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/parley/static/js/2.9d7c91b9.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2ae6895304328304d161",
+    "revision": "c8092d0ac3e326331321",
     "url": "/parley/static/js/main.db607fb1.chunk.js"
   },
   {
