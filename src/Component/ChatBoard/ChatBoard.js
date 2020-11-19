@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, {Component} from 'react'
+import React, {Component, useState, useEffect} from 'react'
 import ReactLoading from 'react-loading'
 import 'react-toastify/dist/ReactToastify.css'
 import {myFirestore, myStorage} from '../../Config/MyFirebase'
@@ -7,6 +7,42 @@ import images from '../Themes/Images'
 import './ChatBoard.css'
 import {AppString} from './../Const'
 import ChatMessage from './Message.js'
+
+// function ChatBoard(props) {
+//     const [isLoading, setLoading] = useState(false)
+//     const [isShowSticker, setShowSticker] = useState(false)
+//     const [inputValue, setInputValue] = useState('')
+//     const currentUserId = localStorage.getItem(AppString.ID)
+//     const currentUserAvatar = localStorage.getItem(AppString.PHOTO_URL)
+//     const currentUserNickname = localStorage.getItem(AppString.NICKNAME)
+//     const listMessage = []
+//     const currentPeerUser = props.currentPeerUser
+//     const groupChatId = null
+//     const removeListener = null
+//     const currentPhotoFile = null
+
+//     useEffect(() => {
+
+
+
+//         return function cleanUp {
+//             if (removeListener) {
+//                 removeListener()
+//             }
+//         };
+//     })
+
+// }
+
+
+
+
+
+
+
+
+
+
 
 export default class ChatBoard extends Component {
     constructor(props) {
@@ -34,6 +70,7 @@ export default class ChatBoard extends Component {
         // For first render, it's not go through componentWillReceiveProps
         this.getListHistory()
     }
+    
 
     componentWillUnmount() {
         if (this.removeListener) {
@@ -390,51 +427,51 @@ export default class ChatBoard extends Component {
                 />
                 <img
                     className="imgSticker"
-                    src={images.mimi2}
+                    src={images.dealWithItParrot}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi2', 2)}
+                    onClick={() => this.onSendMessage('dealWithItParrot', 2)}
                 />
                 <img
                     className="imgSticker"
-                    src={images.mimi3}
+                    src={images.sadParrot}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi3', 2)}
+                    onClick={() => this.onSendMessage('sadParrot', 2)}
                 />
                 <img
                     className="imgSticker"
-                    src={images.mimi4}
+                    src={images.sleepingParrot}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi4', 2)}
+                    onClick={() => this.onSendMessage('sleepingParrot', 2)}
                 />
                 <img
                     className="imgSticker"
-                    src={images.mimi5}
+                    src={images.thumbsUpParrot}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi5', 2)}
+                    onClick={() => this.onSendMessage('thumbsUpParrot', 2)}
                 />
                 <img
                     className="imgSticker"
-                    src={images.mimi6}
+                    src={images.spinningParrot}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi6', 2)}
+                    onClick={() => this.onSendMessage('spinningParrot', 2)}
                 />
                 <img
                     className="imgSticker"
-                    src={images.mimi7}
+                    src={images.angryParrot}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi7', 2)}
+                    onClick={() => this.onSendMessage('angryParrot', 2)}
                 />
                 <img
                     className="imgSticker"
-                    src={images.mimi8}
+                    src={images.confusedParrot}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi8', 2)}
+                    onClick={() => this.onSendMessage('confusedParrot', 2)}
                 />
                 <img
                     className="imgSticker"
-                    src={images.mimi9}
+                    src={images.jumpingParrot}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi9', 2)}
+                    onClick={() => this.onSendMessage('jumpingParrot', 2)}
                 />
             </div>
         )
@@ -453,26 +490,26 @@ export default class ChatBoard extends Component {
         switch (value) {
             case 'partyParrot':
                 return images.partyParrot
-            case 'mimi1':
-                return images.mimi1
-            case 'mimi2':
-                return images.mimi2
-            case 'mimi3':
-                return images.mimi3
-            case 'mimi4':
-                return images.mimi4
-            case 'mimi5':
-                return images.mimi5
-            case 'mimi6':
-                return images.mimi6
-            case 'mimi7':
-                return images.mimi7
-            case 'mimi8':
-                return images.mimi8
+            case 'dealWithItParrot':
+                return images.dealWithItParrot
+            case 'sadParrot':
+                return images.sadParrot
+            case 'sleepingParrot':
+                return images.sleepingParrot
+            case 'thumbsUpParrot':
+                return images.thumbsUpParrot
+            case 'spinningParrot':
+                return images.spinningParrot
+            case 'angryParrot':
+                return images.angryParrot
+            case 'confusedParrot':
+                return images.confusedParrot
+            case 'jumpingParrot':
+                return images.jumpingParrot
             case 'mimi9':
                 return images.mimi9
             default:
-                return null
+                return images.mimi9
         }
     }
 

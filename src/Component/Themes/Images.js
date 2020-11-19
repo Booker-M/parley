@@ -10,16 +10,17 @@ const images = {
     ic_message: require('../../images/ic_message.png'),
     parrot: require('../../images/parrot.png'),
 
-    partyParrot: require('../../images/partyParrot.gif'),
-    mimi1: require('../../images/mimi1.gif'),
-    mimi2: require('../../images/mimi2.gif'),
-    mimi3: require('../../images/mimi3.gif'),
-    mimi4: require('../../images/mimi4.gif'),
-    mimi5: require('../../images/mimi5.gif'),
-    mimi6: require('../../images/mimi6.gif'),
-    mimi7: require('../../images/mimi7.gif'),
-    mimi8: require('../../images/mimi8.gif'),
-    mimi9: require('../../images/mimi9.gif')
+    // Parrot gifs
+
+    partyParrot: require('../../images/parrotGifs/partyParrot.gif'),
+    dealWithItParrot: require('../../images/parrotGifs/dealWithItParrot.gif'),
+    sadParrot: require('../../images/parrotGifs/sadParrot.gif'),
+    sleepingParrot: require('../../images/parrotGifs/sleepingParrot.gif'),
+    thumbsUpParrot: require('../../images/parrotGifs/thumbsUpParrot.gif'),
+    spinningParrot: require('../../images/parrotGifs/spinningParrot.gif'),
+    angryParrot: require('../../images/parrotGifs/angryParrot.gif'),
+    confusedParrot: require('../../images/parrotGifs/confusedParrot.gif'),
+    jumpingParrot: require('../../images/parrotGifs/jumpingParrot.gif'),
 }
 
 export default images

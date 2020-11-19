@@ -12,6 +12,7 @@
     "react-loading": "^2.0.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
+    "react-toast-notifications": "^2.4.0",
     "react-toastify": "^5.5.0"
   },
   "scripts": {
