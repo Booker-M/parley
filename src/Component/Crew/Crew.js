@@ -404,7 +404,7 @@ class Crew extends Component {
                                 alt="icon avatar"
                             />
                             <div className="viewWrapContentItem">
-                                <span className="textItemCrew">{`${
+                                <span className="textHeaderCrew">{`${
                                     item.data().nickname
                                 } | ${item.data().myLanguage}`}</span>
                                 <span className="textItemCrew">{`${
@@ -412,11 +412,11 @@ class Crew extends Component {
                                 }`}</span>
                             </div>
                             <button className="btnCrewNo" onClick={() => name  === "Nonfriends" ? this.report(item) : this.declineInvite(item)}>
-                                {name === "Nonfriends" ? "Report" : "Decline Crew Invite"}</button>
+                                {name === "Nonfriends" ? "Report" : "Decline"}</button>
                             <button className="btnCrewYes" onClick={() => name  === "Nonfriends" ? 
                                 (requestedIds.includes(item.id) ? () => {} : this.sendInvite(item)) : this.acceptInvite(item)}>
                             {name === "Nonfriends" ? 
-                                (requestedIds.includes(item.id) ? "Pending Invite" : "Send Crew Invite") : "Accept Crew Invite"}</button>
+                                (requestedIds.includes(item.id) ? "Pending" : "Invite") : "Accept"}</button>
                         </div>
                     )
                 }
