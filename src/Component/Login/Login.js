@@ -7,6 +7,7 @@ import {myFirebase, myFirestore} from '../../Config/MyFirebase'
 import './Login.css'
 import {AppString} from './../Const'
 import Header from './../Header/Header'
+import moment from 'moment'
 
 class Login extends Component {
     constructor(props) {
@@ -71,6 +72,20 @@ class Login extends Component {
                                     this.props.history.push('/main')
                                 })
                             })
+                            .then(
+                                myFirestore
+                                .collection(AppString.NODE_USERS)
+                                .doc(user.uid)
+                                .collection(AppString.FRIENDS)
+                                .doc(AppString.PARLEY_ACCOUNT_ID)
+                                .set({id: AppString.PARLEY_ACCOUNT_ID})
+                            )
+                            .then(
+                                this.sendMessage("Welcome to Parley!", user.uid, 0),
+                                this.sendMessage("Click the message below to translate", user.uid, 1),
+                                this.sendMessage("Tebrikler! İlk mesajınızı çevirdiniz", user.uid , 2),
+                                this.sendMessage("You can update your language and profile in your account settings", user.uid, 3),
+                            )
                     } else {
                         // Write user info to local
                         localStorage.setItem(AppString.ID, result.docs[0].data().id)
@@ -102,6 +117,39 @@ class Login extends Component {
             .catch(err => {
                 this.props.showToast(0, err.message)
                 this.setState({isLoading: false})
+            })
+    }
+
+    sendMessage = (content, user, order) => {
+        if (content.trim() === '') {
+            return
+        }
+
+        const groupChatId = `${user}-${AppString.PARLEY_ACCOUNT_ID}`
+
+        const timestamp = moment()
+            .add(order, "ms")
+            .valueOf()
+            .toString()
+
+        const itemMessage = {
+            idFrom: AppString.PARLEY_ACCOUNT_ID,
+            idTo: user,
+            timestamp: timestamp,
+            content: content.trim(),
+            type: 0
+        }
+
+        console.log(itemMessage)
+
+        myFirestore
+            .collection(AppString.NODE_MESSAGES)
+            .doc(groupChatId)
+            .collection(groupChatId)
+            .doc(timestamp)
+            .set(itemMessage)
+            .catch(err => {
+                this.props.showToast(0, err.toString())
             })
     }
 

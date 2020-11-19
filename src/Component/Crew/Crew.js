@@ -166,20 +166,20 @@ class Crew extends Component {
                             className={
                                 this.state.currentPeerUser &&
                                 this.state.currentPeerUser.id === item.data().id
-                                    ? 'viewWrapItemFocusedPenpal'
-                                    : 'viewWrapItemPenpal'
+                                    ? 'viewWrapItemFocusedCrew'
+                                    : 'viewWrapItemCrew'
                             }
                         >
                             <img
-                                className="viewAvatarItemPenpal"
+                                className="viewAvatarItemCrew"
                                 src={item.data().photoUrl}
                                 alt="icon avatar"
                             />
                             <div className="viewWrapContentItem">
-                                <span className="textItem">{`${
+                                <span className="textItemCrew">{`${
                                     item.data().nickname
                                 } | ${item.data().myLanguage}`}</span>
-                                <span className="textItem">{`About me: ${
+                                <span className="textItemCrew">{`${
                                     item.data().aboutMe ? item.data().aboutMe : 'Not available'
                                 }`}</span>
                             </div>
@@ -208,7 +208,7 @@ class Crew extends Component {
                 />
 
                 {/* Body */}
-                <div className="bodyPenpal">
+                <div className="bodyCrew">
                     <span className="heading">{this.state.listPending.length > 0 ? "Pending Crewmates" : ""}</span>
                     <div className="viewListNonfriends"> {this.renderListUser("Pending", this.state.listPending)}</div>
                     <span className="heading">Recruit Your Crew</span>
