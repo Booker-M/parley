@@ -27,7 +27,7 @@
 .viewListUser {
     overflow-y: scroll;
     overflow-x: hidden;
-    /* height: 90vh; */
+    height: 90vh;
     padding-top: 10px;
     padding-bottom: 10px;
     min-width: 75px;
@@ -109,5 +109,5 @@
 .viewBoard {
     display: flex;
     flex: 1;
-    /* height: 90vh; */
+    /* height: 100%; */
 }

@@ -11,5 +11,6 @@ export const AppString = {
     PREFIX_IMAGE: 'image/',
     PENDING: "pending",
     FRIENDS: "friends",
-    REQUESTED: "requested"
+    REQUESTED: "requested",
+    PARLEY_ACCOUNT_ID: "z9yc9RbriNAYKUOgag7r"
 }
