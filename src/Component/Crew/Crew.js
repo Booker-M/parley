@@ -439,7 +439,7 @@ class Crew extends Component {
                 <div className="bodyCrew">
                     <span className="heading">{this.state.listPending.length > 0 ? "Pending Crewmates" : ""}</span>
                     <div className="viewListNonfriends"> {this.renderListUser("Pending", this.state.listPending)}</div>
-                    <span className="heading">Recruit Your Crew</span>
+                    <span className="heading">Find Your Crew</span>
                     <div className="viewListNonfriends"> {this.renderListUser("Nonfriends", this.state.listFriends, this.state.listPending)}</div>
                 </div>
 
