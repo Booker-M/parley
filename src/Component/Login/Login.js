@@ -74,10 +74,10 @@ function Login() {
                                 .set({id: AppString.PARLEY_ACCOUNT_ID})
                             )
                             .then(
-                                this.sendMessage("Welcome to Parley!", user.uid, 0),
-                                this.sendMessage("Click the message below to translate", user.uid, 1),
-                                this.sendMessage("Tebrikler! İlk mesajınızı çevirdiniz", user.uid , 2),
-                                this.sendMessage("You can update your language and profile in your account settings", user.uid, 3),
+                                sendMessage("Welcome to Parley!", user.uid, 0),
+                                sendMessage("Click the message below to translate:", user.uid, 1),
+                                sendMessage("Tebrikler! İlk mesajınızı çevirdiniz", user.uid , 2),
+                                sendMessage("You can update your language and profile in your account settings", user.uid, 3),
                             )
                     } else {
                         // Write user info to local
@@ -98,40 +98,17 @@ function Login() {
                             AppString.MY_LANGUAGE,
                             result.docs[0].data().myLanguage
                         )
-                        this.setState({isLoading: false}, () => {
-                            this.props.showToast(1, 'Login success')
-                            this.props.history.push('/main')
-                        })
-                } else {
-                    // Write user info to local
-                    localStorage.setItem(AppString.ID, result.docs[0].data().id)
-                    localStorage.setItem(
-                        AppString.NICKNAME,
-                        result.docs[0].data().nickname
-                    )
-                    localStorage.setItem(
-                        AppString.PHOTO_URL,
-                        result.docs[0].data().photoUrl
-                    )
-                    localStorage.setItem(
-                        AppString.ABOUT_ME,
-                        result.docs[0].data().aboutMe
-                    )
-                    localStorage.setItem(
-                        AppString.MY_LANGUAGE,
-                        result.docs[0].data().myLanguage
-                    )
-                    setIsLoading(false)
-                    history.push('/main')
                 }
-            } 
+                setIsLoading(false)
+                history.push('/main')
+            }
         })
         .catch(err => {
             setIsLoading(false)
         })
     }
 
-    sendMessage = (content, user, order) => {
+    const sendMessage = (content, user, order) => {
         if (content.trim() === '') {
             return
         }
