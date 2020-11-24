@@ -19,28 +19,13 @@ export default function ChatBoard(props) {
     const [isShowSticker, setShowSticker] = useState(false)
     const [inputValue, setInputValue] = useState('')
     const currentUserId = localStorage.getItem(AppString.ID)
-    const [listMessage] = useState([])
+    const [listMessage, setListMessages] = useState([])
     const [groupChatId, setGroupChatId] = useState('4')
     let removeListener = null
     let currentPhotoFile = null
     let messagesEnd
     let refInput
     let currentPeerUser = props.currentPeerUser
-
-
-    useEffect(() => {
-        getListHistory();
-
-        return function cleanUp() {
-            if (removeListener) {
-                removeListener()
-            }
-        };
-    }, []);
-
-    useEffect(() => {
-        print("IT RAN")
-    }, [listMessage])
 
     useEffect(() => {
         if (props.currentPeerUser) {
@@ -53,7 +38,7 @@ export default function ChatBoard(props) {
                 removeListener()
             }
         };
-    }, [props])
+    }, [props.currentPeerUser])
 
     useEffect(() => {
         scrollToBottom()
@@ -61,11 +46,7 @@ export default function ChatBoard(props) {
 
 
     const getListHistory = () => {
-        if (removeListener) {
-            removeListener()
-        }
         let groupId = ''
-        listMessage.length = 0
         setLoading(true)
         if (hashString(currentUserId) <= hashString(currentPeerUser.id)) {
             groupId = `${currentUserId}-${currentPeerUser.id}`
@@ -84,7 +65,8 @@ export default function ChatBoard(props) {
                 snapshot => {
                     snapshot.docChanges().forEach(change => {
                         if (change.type === AppString.DOC_ADDED) {
-                            listMessage.push(change.doc.data())
+                            console.log(...listMessage);
+                            setListMessages([...listMessage, change.doc.data()])
                         }
                     })
                 setLoading(false)
