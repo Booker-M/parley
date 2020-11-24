@@ -28,7 +28,9 @@ export default function ChatBoard(props) {
     let currentPeerUser = props.currentPeerUser
 
     useEffect(() => {
+        setListMessages([])
         if (props.currentPeerUser) {
+            setListMessages([])
             currentPeerUser = props.currentPeerUser
             getListHistory()
         }
@@ -45,7 +47,7 @@ export default function ChatBoard(props) {
     }, [isLoading]);
 
 
-    const getListHistory = () => {
+    function getListHistory(list) {
         let groupId = ''
         setLoading(true)
         if (hashString(currentUserId) <= hashString(currentPeerUser.id)) {
@@ -63,11 +65,18 @@ export default function ChatBoard(props) {
             .collection(groupId)
             .onSnapshot(
                 snapshot => {
+                    console.log(snapshot)
+                    let tempListMessages = []
                     snapshot.docChanges().forEach(change => {
                         if (change.type === AppString.DOC_ADDED) {
-                            console.log(...listMessage);
-                            setListMessages([...listMessage, change.doc.data()])
+                            tempListMessages.push(change.doc.data())
                         }
+                    })
+                    console.log("Here")
+                    setListMessages((prevList) => {
+                        console.log(tempListMessages)
+                        console.log(listMessage)
+                        return [...listMessage, ...tempListMessages];
                     })
                 setLoading(false)
                 },
@@ -108,9 +117,6 @@ export default function ChatBoard(props) {
             .collection(groupChatId)
             .doc(timestamp)
             .set(itemMessage)
-            // .then(() => {
-            //     // getListHistory()
-            // })
             .then(() => {
                 setInputValue('')
             })
