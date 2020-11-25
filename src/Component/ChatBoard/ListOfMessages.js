@@ -3,9 +3,6 @@ import ChatMessage from './Message'
 import images from '../Themes/Images'
 import moment from 'moment'
 
-
-
-
 export default function ListOfMessages(props) {
 
     const getGifImage = value => {

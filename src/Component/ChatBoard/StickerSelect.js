@@ -49,8 +49,8 @@ function StickerSelect(props) {
                 />
                 <Sticker
                     image = {images.jumpingParrot}
-                    image = {'jumpingParrot'}
-                    onSendMessage = {props.jumpingParrot}
+                    imageString = {'jumpingParrot'}
+                    onSendMessage = {props.onSendMessage}
                 />
             </div>
         )

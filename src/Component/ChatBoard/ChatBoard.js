@@ -1,98 +1,96 @@
-/* Currently sending Stickers, but not rendering them */
-
-
 import moment from 'moment'
-import React, {useState, useEffect} from 'react'
+import React, {Component} from 'react'
 import ReactLoading from 'react-loading'
 import 'react-toastify/dist/ReactToastify.css'
 import {myFirestore, myStorage} from '../../Config/MyFirebase'
 import images from '../Themes/Images'
 import './ChatBoard.css'
 import {AppString} from './../Const'
-import ChatMessage from './Message.js'
 import StickerSelect from './StickerSelect'
 import ListOfMessages from './ListOfMessages'
-// import MessageBar from './MessageBar'
 
-export default function ChatBoard(props) {
-    const [isLoading, setLoading] = useState(false)
-    const [isShowSticker, setShowSticker] = useState(false)
-    const [inputValue, setInputValue] = useState('')
-    const currentUserId = localStorage.getItem(AppString.ID)
-    const [listMessage, setListMessages] = useState([])
-    const [groupChatId, setGroupChatId] = useState('4')
-    let removeListener = null
-    let currentPhotoFile = null
-    let messagesEnd
-    let refInput
-    let currentPeerUser = props.currentPeerUser
-
-    useEffect(() => {
-        setListMessages([])
-        if (props.currentPeerUser) {
-            setListMessages([])
-            currentPeerUser = props.currentPeerUser
-            getListHistory()
+//Only works properly as a component for now
+export default class ChatBoard extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isLoading: false,
+            isShowSticker: false,
+            inputValue: ''
         }
+        this.currentUserId = localStorage.getItem(AppString.ID)
+        this.listMessage = []
+        this.currentPeerUser = this.props.currentPeerUser
+        this.groupChatId = null
+        this.removeListener = null
+        this.currentPhotoFile = null
+    }
 
-        return function cleanUp() {
-            if (removeListener) {
-                removeListener()
-            }
-        };
-    }, [props.currentPeerUser])
+    componentDidUpdate() {
+        this.scrollToBottom()
+    }
 
-    useEffect(() => {
-        scrollToBottom()
-    }, [isLoading]);
+    componentDidMount() {
+        this.getListHistory()
+    }
+    
 
+    componentWillUnmount() {
+        if (this.removeListener) {
+            this.removeListener()
+        }
+    }
 
-    function getListHistory(list) {
-        let groupId = ''
-        setLoading(true)
-        if (hashString(currentUserId) <= hashString(currentPeerUser.id)) {
-            groupId = `${currentUserId}-${currentPeerUser.id}`
-            setGroupChatId(groupId)
+    componentWillReceiveProps(newProps) {
+        if (newProps.currentPeerUser) {
+            this.currentPeerUser = newProps.currentPeerUser
+            this.getListHistory()
+        }
+    }
+
+    getListHistory = () => {
+        if (this.removeListener) {
+            this.removeListener()
+        }
+        this.listMessage.length = 0
+        this.setState({isLoading: true})
+        if (
+            this.hashString(this.currentUserId) <=
+            this.hashString(this.currentPeerUser.id)
+        ) {
+            this.groupChatId = `${this.currentUserId}-${this.currentPeerUser.id}`
         } else {
-            groupId = `${currentPeerUser.id}-${currentUserId}`
-            setGroupChatId(groupId)
+            this.groupChatId = `${this.currentPeerUser.id}-${this.currentUserId}`
         }
 
-        // Get history and listen new data added
-        removeListener = myFirestore
+        // Get history and listen for new data added
+        this.removeListener = myFirestore
             .collection(AppString.NODE_MESSAGES)
-            .doc(groupId)
-            .collection(groupId)
+            .doc(this.groupChatId)
+            .collection(this.groupChatId)
             .onSnapshot(
                 snapshot => {
-                    console.log(snapshot)
-                    let tempListMessages = []
                     snapshot.docChanges().forEach(change => {
                         if (change.type === AppString.DOC_ADDED) {
-                            tempListMessages.push(change.doc.data())
+                            this.listMessage.push(change.doc.data())
                         }
                     })
-                    console.log("Here")
-                    setListMessages((prevList) => {
-                        console.log(tempListMessages)
-                        console.log(listMessage)
-                        return [...listMessage, ...tempListMessages];
-                    })
-                setLoading(false)
+                    this.setState({isLoading: false})
                 },
                 err => {
-                    console.log(err)
+                    this.props.showToast(0, err.toString())
                 }
             )
     }
 
-    const openListSticker = () => {
-        setShowSticker(!isShowSticker)
+    openListSticker = () => {
+        this.setState({isShowSticker: !this.state.isShowSticker})
+        console.log(this.state.isShowSticker)
     }
 
-    function onSendMessage(content, type) {
-        if (isShowSticker && type === 2) {
-            setShowSticker(false)
+    onSendMessage = (content, type) => {
+        if (this.state.isShowSticker && type === 2) {
+            this.setState({isShowSticker: false})
         }
 
         if (content.trim() === '') {
@@ -104,48 +102,46 @@ export default function ChatBoard(props) {
             .toString()
 
         const itemMessage = {
-            idFrom: currentUserId,
-            idTo: currentPeerUser.id,
+            idFrom: this.currentUserId,
+            idTo: this.currentPeerUser.id,
             timestamp: timestamp,
             content: content.trim(),
             type: type
-        } 
+        }
 
         myFirestore
             .collection(AppString.NODE_MESSAGES)
-            .doc(groupChatId)
-            .collection(groupChatId)
+            .doc(this.groupChatId)
+            .collection(this.groupChatId)
             .doc(timestamp)
             .set(itemMessage)
             .then(() => {
-                setInputValue('')
+                this.setState({inputValue: ''})
             })
-        .catch(err => {
-            console.log(err)
-        })
-
-        console.log(listMessage)
+            .catch(err => {
+                this.props.showToast(0, err.toString())
+            })
     }
 
-    const onChoosePhoto = event => {
+    onChoosePhoto = event => {
         if (event.target.files && event.target.files[0]) {
-            setLoading(true)
-            currentPhotoFile = event.target.files[0]
-            // Check this file is an image?
+            this.setState({isLoading: true})
+            this.currentPhotoFile = event.target.files[0]
+            // Check if this file is an image?
             const prefixFiletype = event.target.files[0].type.toString()
             if (prefixFiletype.indexOf(AppString.PREFIX_IMAGE) === 0) {
-                uploadPhoto()
+                this.uploadPhoto()
             } else {
-                setLoading(false)
-                //Add error message here
+                this.setState({isLoading: false})
+                this.props.showToast(0, 'This file is not an image')
             }
         } else {
-            setLoading(false)
+            this.setState({isLoading: false})
         }
     }
 
-    const uploadPhoto = () => {
-        if (currentPhotoFile) {
+    uploadPhoto = () => {
+        if (this.currentPhotoFile) {
             const timestamp = moment()
                 .valueOf()
                 .toString()
@@ -153,41 +149,41 @@ export default function ChatBoard(props) {
             const uploadTask = myStorage
                 .ref()
                 .child(timestamp)
-                .put(currentPhotoFile)
+                .put(this.currentPhotoFile)
 
             uploadTask.on(
                 AppString.UPLOAD_CHANGED,
                 null,
                 err => {
-                    setLoading(false)
-                    //Show error message
+                    this.setState({isLoading: false})
+                    this.props.showToast(0, err.message)
                 },
                 () => {
                     uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-                        setLoading(false)
-                        onSendMessage(downloadURL, 1)
+                        this.setState({isLoading: false})
+                        this.onSendMessage(downloadURL, 1)
                     })
                 }
             )
         } else {
-            setLoading(false)
-            //Error message file is null
+            this.setState({isLoading: false})
+            this.props.showToast(0, 'File is null')
         }
     }
 
-    const onKeyboardPress = event => {
+    onKeyboardPress = event => {
         if (event.key === 'Enter') {
-            onSendMessage(inputValue, 0)
+            this.onSendMessage(this.state.inputValue, 0)
         }
     }
 
-    const scrollToBottom = () => {
-        if (messagesEnd) {
-            messagesEnd.scrollIntoView({})
+    scrollToBottom = () => {
+        if (this.messagesEnd) {
+            this.messagesEnd.scrollIntoView({})
         }
     }
 
-    const hashString = str => {
+    hashString = str => {
         let hash = 0
         for (let i = 0; i < str.length; i++) {
             hash += Math.pow(str.charCodeAt(i) * 31, str.length - i)
@@ -196,88 +192,89 @@ export default function ChatBoard(props) {
         return hash
     }
 
-    return (
-        <div className="viewChatBoard">
-            {/* Header */}
-            <div className="headerChatBoard">
-                <img
-                    className="viewAvatarItem"
-                    src={currentPeerUser.photoUrl}
-                    alt="icon avatar"
-                />
-                <span className="textHeaderChatBoard">
-                {currentPeerUser.nickname}
-                </span>
-            </div>
+    render() {
+        return (
+            <div className="viewChatBoard">
+                {/* Header */}
+                <div className="headerChatBoard">
+                    <img
+                        className="viewAvatarItem"
+                        src={this.currentPeerUser.photoUrl}
+                        alt="icon avatar"
+                    />
+                    <span className="textHeaderChatBoard">
+                    {this.currentPeerUser.nickname}
+                    </span>
+                </div>
 
-            {/* List message */}
-            <div className="viewListContentChat">
-                < ListOfMessages 
-                    listMessage = { listMessage }
-                    currentUserId = { currentUserId }
-                    currentPeerUser = { currentPeerUser }
-                />
-                <div
-                    style={{float: 'left', clear: 'both'}}
-                    ref={el => {
-                        messagesEnd = el
-                    }}
-                />
-            </div>
-
-            {/* Stickers */}
-            {isShowSticker ? <StickerSelect onSendMessage={onSendMessage}/> : null}
-
-            {/* View bottom */}
-            <div className="viewBottom">
-                <img
-                    className="icOpenGallery"
-                    src={images.ic_photo}
-                    alt="icon open gallery"
-                    onClick={() => refInput.click()}
-                />
-                <input
-                    ref={el => {
-                        refInput = el
-                    }}
-                    accept="image/*"
-                    className="viewInputGallery"
-                    type="file"
-                    onChange={onChoosePhoto}
-                />
-                <img
-                    className="icOpenSticker"
-                    src={images.ic_sticker}
-                    alt="icon open sticker"
-                    onClick={openListSticker}
-                />
-                <input
-                    className="viewInput"
-                    placeholder="Type your message..."
-                    value={inputValue}
-                    onChange={event => { setInputValue(event.target.value) } }
-                    onKeyPress={onKeyboardPress}
-                />
-                <img
-                    className="icSend"
-                    src={images.ic_send}
-                    alt="icon send"
-                    onClick={() => onSendMessage(inputValue, 0)}
-                />
-            </div>
-
-            {/* Loading */}
-            {isLoading ? (
-                <div className="viewLoading">
-                    <ReactLoading
-                        type={'spin'}
-                        color={'#203152'}
-                        height={'3%'}
-                        width={'3%'}
+                {/* List message */}
+                <div className="viewListContentChat">
+                    < ListOfMessages 
+                        listMessage = { this.listMessage }
+                        currentUserId = { this.currentUserId }
+                        currentPeerUser = { this.currentPeerUser }
+                    />
+                    <div
+                        style={{float: 'left', clear: 'both'}}
+                        ref={el => {
+                            this.messagesEnd = el
+                        }}
                     />
                 </div>
-            ) : null}
-        </div>
-    )
 
+                {/* Stickers */}
+                {this.state.isShowSticker ? <StickerSelect onSendMessage={this.onSendMessage}/> : null}
+
+                {/* View bottom */}
+                <div className="viewBottom">
+                    <img
+                        className="icOpenGallery"
+                        src={images.ic_photo}
+                        alt="icon open gallery"
+                        onClick={() => this.refInput.click()}
+                    />
+                    <input
+                        ref={el => {
+                            this.refInput = el
+                        }}
+                        accept="image/*"
+                        className="viewInputGallery"
+                        type="file"
+                        onChange={this.onChoosePhoto}
+                    />
+                    <img
+                        className="icOpenSticker"
+                        src={images.ic_sticker}
+                        alt="icon open sticker"
+                        onClick={this.openListSticker}
+                    />
+                    <input
+                        className="viewInput"
+                        placeholder="Type your message..."
+                        value={this.state.inputValue}
+                        onChange={event => { this.setState({inputValue: event.target.value}) } }
+                        onKeyPress={this.onKeyboardPress}
+                    />
+                    <img
+                        className="icSend"
+                        src={images.ic_send}
+                        alt="icon send"
+                        onClick={() => this.onSendMessage(this.state.inputValue, 0)}
+                    />
+                </div>
+
+                {/* Loading */}
+                {this.state.isLoading ? (
+                    <div className="viewLoading">
+                        <ReactLoading
+                            type={'spin'}
+                            color={'#203152'}
+                            height={'3%'}
+                            width={'3%'}
+                        />
+                    </div>
+                ) : null}
+            </div>
+        )
+    }
 }
