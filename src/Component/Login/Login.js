@@ -73,7 +73,7 @@ function Login() {
                             )
                             .then(
                                 sendMessage("Welcome to Parley!", user.uid, 0),
-                                sendMessage("Click the message below to translate", user.uid, 1),
+                                sendMessage("Click the message below to translate:", user.uid, 1),
                                 sendMessage("Tebrikler! İlk mesajınızı çevirdiniz", user.uid , 2),
                                 sendMessage("You can update your language and profile in your account settings", user.uid, 3),
                             )
@@ -99,28 +99,10 @@ function Login() {
                         setIsLoading(false);
                         history.push('/main');
                     }
-                } else {
-                    // Write user info to local
-                    localStorage.setItem(AppString.ID, result.docs[0].data().id)
-                    localStorage.setItem(
-                        AppString.NICKNAME,
-                        result.docs[0].data().nickname
-                    )
-                    localStorage.setItem(
-                        AppString.PHOTO_URL,
-                        result.docs[0].data().photoUrl
-                    )
-                    localStorage.setItem(
-                        AppString.ABOUT_ME,
-                        result.docs[0].data().aboutMe
-                    )
-                    localStorage.setItem(
-                        AppString.MY_LANGUAGE,
-                        result.docs[0].data().myLanguage
-                    )
-                    setIsLoading(false)
-                    history.push('/main')
                 }
+                setIsLoading(false)
+                history.push('/main')
+            }
         })
         .catch(err => {
             setIsLoading(false)

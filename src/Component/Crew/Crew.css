@@ -86,7 +86,7 @@
     max-height: 70px;
     min-height: 30px;
     min-width: 30px;
-    border-radius: 25px;
+    border-radius: 50px;
     object-fit: cover;
 }
 
@@ -105,6 +105,17 @@
 }
 
 .textItemCrew {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* width: 240px; */
+    text-align: left;
+    font-size: max(min(2.5vw, 16px), 10px);
+    /* font-size-adjust: 0.25; */
+}
+
+.textHeaderCrew {
     display: block;
     overflow: hidden;
     white-space: nowrap;
