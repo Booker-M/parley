@@ -60,10 +60,8 @@ function Login() {
                                 localStorage.setItem(AppString.MY_LANGUAGE, 'en')
                                 localStorage.setItem(AppString.PENDING, [])
                                 localStorage.setItem(AppString.FRIENDS, [])
-                                this.setState({isLoading: false}, () => {
-                                    this.props.showToast(1, 'Login success')
-                                    this.props.history.push('/main')
-                                })
+                                setIsLoading(false)
+                                history.push('/main');
                             })
                             .then(
                                 myFirestore
@@ -98,6 +96,9 @@ function Login() {
                             AppString.MY_LANGUAGE,
                             result.docs[0].data().myLanguage
                         )
+                        setIsLoading(false);
+                        history.push('/main');
+                    }
                 }
                 setIsLoading(false)
                 history.push('/main')
@@ -137,7 +138,7 @@ function Login() {
             .doc(timestamp)
             .set(itemMessage)
             .catch(err => {
-                this.props.showToast(0, err.toString())
+                // this.props.showToast(0, err.toString())
             })
     }
 
