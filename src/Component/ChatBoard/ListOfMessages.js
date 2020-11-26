@@ -2,6 +2,7 @@ import React from 'react'
 import ChatMessage from './Message'
 import images from '../Themes/Images'
 import moment from 'moment'
+import './ListOfMessages.css'
 
 export default function ListOfMessages(props) {
 

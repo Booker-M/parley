@@ -89,7 +89,7 @@ function Header(props) {
                             class={"icon"}
                             image={images.ic_crew}
                             function={onCrewClick}
-                            text={"Crewsearch"}
+                            text={"Crew Search"}
                         />
                         <Button
                             class={"icon"}

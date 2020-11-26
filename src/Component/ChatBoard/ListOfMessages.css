@@ -1,0 +1,181 @@
+/* View item message */
+
+.viewItemRight {
+    width: 300px;
+    height: auto;
+    background-color: #e8e8e8;
+    align-self: flex-end;
+    margin-right: 20px;
+    margin-top: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 0px;
+    color: #296972;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.1s;
+}
+
+.viewItemRight:hover {
+    background-color: #f5f5f5;
+}
+
+.viewItemRight:active {
+    opacity: 0.5;
+}
+
+.viewItemRight2 {
+    width: 300px;
+    height: auto;
+    background-color: #e8e8e8;
+    align-self: flex-end;
+    margin-right: 20px;
+    margin-top: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 0px;
+    color: #203152;
+    text-align: left;
+}
+
+.viewItemRight3 {
+    width: 300px;
+    height: auto;
+    align-self: flex-end;
+    margin-right: 20px;
+    margin-top: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 0px;
+    text-align: left;
+}
+
+.viewWrapItemLeft {
+    width: 300px;
+    text-align: left;
+    align-self: flex-start;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: -15px;
+}
+
+.viewWrapItemLeft2 {
+    width: 300px;
+    align-self: flex-start;
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: -15px;
+}
+
+.viewWrapItemLeft3 {
+    flex-direction: row;
+    display: flex;
+    width: 340px;
+    margin-bottom: -15px;
+}
+
+.viewItemLeft {
+    width: 300px;
+    height: auto;
+    background-color: #296972;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+    transition: 0.1s;
+}
+
+.viewItemLeft:hover {
+    background-color: rgb(39, 131, 143);
+}
+
+.viewItemLeft:active {
+    opacity: 0.5;
+}
+
+.viewItemLeft2 {
+    width: 300px;
+    height: auto;
+    background-color: #296972;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 8px;
+    color: white;
+}
+
+.viewItemLeft3 {
+    width: 300px;
+    height: auto;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 8px;
+    color: white;
+}
+
+.peerAvatarLeft {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    object-fit: cover;
+    align-self: flex-end;
+}
+
+.viewPaddingLeft {
+    width: 40px;
+}
+
+/* Item text */
+
+.textContentItem {
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.viewListContentChat div:last-child {
+    margin-bottom: 10px;
+}
+
+/* Item image */
+
+.imgItemRight {
+    object-fit: cover;
+    width: 300px;
+    height: 300px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 0px;
+}
+
+.imgItemLeft {
+    object-fit: cover;
+    width: 300px;
+    height: 300px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 8px;
+}
+
+.textTimeLeft {
+    color: #808888;
+    font-size: 12px;
+    font-style: italic;
+    margin-left: 50px;
+}
