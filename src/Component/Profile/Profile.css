@@ -30,14 +30,17 @@
 .textLabel {
     font-weight: bold;
     color: #54b7d7;
-    font-style: italic;
     font-size: 18px;
+    min-width: 100px;
     margin-top: 50px;
-    margin-left: -400px;
+    margin-right: 440px;
+    padding-left: 10px;
+    padding-bottom: 10px;
 }
 
 .textInput {
     width: 500px;
+    max-width: 88vw;
     align-self: center;
     border: none;
     background-color: #54b7d7;
@@ -48,7 +51,6 @@
     padding-left: 10px;
     padding-right: 10px;
     color: white;
-    margin-top: 10px;
     transition: 0.3s;
 }
 
@@ -106,6 +108,18 @@ input::placeholder {
     padding: 5px;
 }
 
+.language {
+    width: 500px;
+    max-width: 90vw;
+    align-self: center;
+}
+
+.reset {
+    width: 40px;
+    height: 40px;
+    float: right;
+}
+
 /* Select */
 .select-css {
     /* display: block; */
@@ -137,6 +151,8 @@ input::placeholder {
     background-position: right .7em top 50%, 0 0;
     /* icon size, then gradient */
     background-size: .65em auto, 100%;
+
+    margin-left: 7%;
     }
     /* Hide arrow icon in IE browsers */
     .select-css::-ms-expand {
@@ -177,7 +193,3 @@ input::placeholder {
     .select-css:disabled:hover, .select-css[aria-disabled=true] {
     border-color: #aaa;
     }
-    
-    /* body {
-      margin: 2rem;
-    } */

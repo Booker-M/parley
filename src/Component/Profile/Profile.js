@@ -9,6 +9,8 @@ import './Profile.css'
 import {AppString} from './../Const'
 import {listLanguagesWithTarget} from '../../Config/MyTranslate.js'
 import Header from './../Header/Header'
+import LanguageSelector from './LanguageSelector'
+import Tooltip from '@material-ui/core/Tooltip';
 
 function Profile() {
     const [isLoading, setLoading] = useState(false)
@@ -48,8 +50,11 @@ function Profile() {
 
     function onChangeMyLanguage(event) {
         setLanguage(event.target.value ? event.target.value : myLanguage)
-        updateLanguages()
     }
+
+    useEffect(() => {
+        updateLanguages();
+    }, [myLanguage])
 
     function onChangeAvatar(event) {
         if(event.target.files && event.target.files[0]) {
@@ -122,6 +127,10 @@ function Profile() {
             })
     }
 
+    function resetLanguage() {
+        setLanguage(navigator.language === "en-US" ? 'en' : navigator.language)
+    }
+
     return (
         <div className="root">
             <Header
@@ -164,20 +173,7 @@ function Profile() {
             />
 
             <span className="textLabel">Language:</span>
-            <div>
-                {/* iterate through language options to create a select box */}
-                <select
-                    className="select-css"
-                    value={myLanguage}
-                    onChange={onChangeMyLanguage}
-                >
-                    {languages.map(lang => (
-                        <option key={lang.code} value={lang.code}>
-                        {lang.name}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            <LanguageSelector myLanguage={myLanguage} languages={languages} onChangeMyLanguage={onChangeMyLanguage} resetLanguage={resetLanguage}/>
 
             <button className="btnUpdate" onClick={uploadAvatar}>
                 Update

@@ -161,12 +161,12 @@ function Crew(props) {
             />
 
             {/* Body */}
-            <div className="bodyPenpal">
+            <div className="bodyCrew">
                 <span className="heading">{listPending.length > 0 ? "Pending Crewmates" : ""}</span>
-                <UserList name={"Pending"} lists={[listPending]} currentUserId={currentUserId} listUser={listUser} listRequested={listRequested} listReported={listReported}
+                <UserList className={"viewList"} name={"Pending"} lists={[listPending]} currentUserId={currentUserId} listUser={listUser} listRequested={listRequested} listReported={listReported}
                     askReport={askReport} declineInvite={declineInvite} sendInvite={sendInvite} acceptInvite={acceptInvite} languages={languages}/>
                 <span className="heading">Recruit Your Crew</span>
-                <UserList name={"Nonfriends"} lists={[listFriends, listPending]} currentUserId={currentUserId} listUser={listUser} listRequested={listRequested} listReported={listReported}
+                <UserList className={"viewList"} name={"Nonfriends"} lists={[listFriends, listPending]} currentUserId={currentUserId} listUser={listUser} listRequested={listRequested} listReported={listReported}
                     askReport={askReport} declineInvite={declineInvite} sendInvite={sendInvite} acceptInvite={acceptInvite} languages={languages}/>
             </div>
 

@@ -9,6 +9,7 @@ const images = {
     ic_crew: require('../../images/ic_crew.png'),
     ic_message: require('../../images/ic_message.png'),
     parrot: require('../../images/parrot.png'),
+    reset: require('../../images/reset.png'),
 
     // Parrot gifs
 

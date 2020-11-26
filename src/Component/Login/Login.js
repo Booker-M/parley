@@ -49,7 +49,7 @@ function Login() {
                             id: user.uid,
                             nickname: user.displayName,
                             aboutMe: '',
-                            myLanguage: 'en',
+                            myLanguage: navigator.language === "en-US" ? 'en' : navigator.language,
                             photoUrl: user.photoURL
                         })
                         .then(data => {
@@ -57,7 +57,7 @@ function Login() {
                             localStorage.setItem(AppString.ID, user.uid)
                             localStorage.setItem(AppString.NICKNAME, user.displayName)
                             localStorage.setItem(AppString.PHOTO_URL, user.photoURL)
-                            localStorage.setItem(AppString.MY_LANGUAGE, 'en')
+                            localStorage.setItem(AppString.MY_LANGUAGE, navigator.language === "en-US" ? 'en' : navigator.language)
                             localStorage.setItem(AppString.PENDING, [])
                             localStorage.setItem(AppString.FRIENDS, [])
                             setIsLoading(false)
