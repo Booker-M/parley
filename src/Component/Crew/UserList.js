@@ -38,7 +38,7 @@ export default function UserList(props) {
                         <div className="viewWrapContentItem">
                             <span className="textHeaderCrew">{`${
                                 item.data().nickname
-                            } | ${props.languages.filter(lang => lang.code === item.data().myLanguage)[0].name}`}</span>
+                            } | ${props.languages ? "" : props.languages.filter(lang => lang.code === item.data().myLanguage)[0].name}`}</span>
                             <span className="textItemCrew">{item.data().aboutMe ? item.data().aboutMe : 'Not available'
                             }</span>
                         </div>
@@ -49,7 +49,7 @@ export default function UserList(props) {
                         <button className="btnCrewYes" onClick={() => props.name  === "Nonfriends" ? 
                             (requestedIds.includes(item.id) ? () => {} : props.sendInvite(item)) : props.acceptInvite(item)}>
                         {props.name === "Nonfriends" ? 
-                            (requestedIds.includes(item.id) ? "Pending" : "Invite") : "Accept Crew Invite"}</button>
+                            (requestedIds.includes(item.id) ? "Pending" : "Invite") : "Accept"}</button>
                     </div>
                 )
             }

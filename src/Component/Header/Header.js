@@ -5,6 +5,7 @@ import images from '../Themes/Images'
 import { useHistory } from "react-router-dom";
 import './Header.css'
 import {AppString} from './../Const'
+import Button from './Button'
 
 function Header(props) {
     const [isOpenDialogConfirmLogout, setOpenDialogConfimLogOut] = useState(false)
@@ -89,29 +90,29 @@ function Header(props) {
                             src={images.parrot}
                         />
                         <span className="text">Parley</span>
-                        <img
-                            className="icon"
-                            alt="An icon logout"
-                            src={images.ic_logout}
-                            onClick={onLogoutClick}
+                        <Button
+                            class={"icon"}
+                            image={images.ic_logout}
+                            function={onLogoutClick}
+                            text={"Logout"}
                         />
-                        <img
-                            className="profile"
-                            alt="An icon default avatar"
-                            src={currentUserAvatar}
-                            onClick={onProfileClick}
+                        <Button
+                            class={"profile"}
+                            image={currentUserAvatar}
+                            function={onProfileClick}
+                            text={"Profile"}
                         />
-                        <img
-                            className="icon"
-                            alt="An icon crew"
-                            src={images.ic_crew}
-                            onClick={onCrewClick}
+                        <Button
+                            class={"icon"}
+                            image={images.ic_crew}
+                            function={onCrewClick}
+                            text={"Crewsearch"}
                         />
-                        <img
-                            className="icon"
-                            alt="An icon message"
-                            src={images.ic_message}
-                            onClick={onMessageClick}
+                        <Button
+                            class={"icon"}
+                            image={images.ic_message}
+                            function={onMessageClick}
+                            text={"Messager"}
                         />
                     </div>
 
