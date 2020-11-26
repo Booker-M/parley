@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Component} from 'react'
+import React, {useState, useEffect} from 'react'
 import ReactLoading from 'react-loading'
 import {withRouter} from 'react-router-dom'
 import {myFirestore} from '../../Config/MyFirebase'
@@ -7,6 +7,7 @@ import './Crew.css'
 import {AppString} from './../Const'
 import Header from './../Header/Header'
 import UserList from './UserList'
+import {listLanguagesWithTarget} from '../../Config/MyTranslate.js'
 
 function Crew(props) {
     const [isLoading, setLoading] = useState(true);
@@ -17,13 +18,19 @@ function Crew(props) {
     const [listRequested, setListRequested] = useState([])
     const [listReported, setListReported] = useState([])
     const [reportedUser, setReportedUser] = useState("")
+    const [languages, setLanguages] = useState([])
     const history = useHistory();
 
     const currentUserId = localStorage.getItem(AppString.ID)
 
     useEffect(() => {
-        checkLogin();
-    }, []);
+        checkLogin()
+        updateLanguages()
+    }, [])
+
+    async function updateLanguages() {
+        setLanguages(await listLanguagesWithTarget())
+    }
 
     const checkLogin = () => {
         if (!localStorage.getItem(AppString.ID)) {
@@ -157,10 +164,10 @@ function Crew(props) {
             <div className="bodyPenpal">
                 <span className="heading">{listPending.length > 0 ? "Pending Crewmates" : ""}</span>
                 <UserList name={"Pending"} lists={[listPending]} currentUserId={currentUserId} listUser={listUser} listRequested={listRequested} listReported={listReported}
-                    askReport={askReport} declineInvite={declineInvite} sendInvite={sendInvite} acceptInvite={acceptInvite}/>
+                    askReport={askReport} declineInvite={declineInvite} sendInvite={sendInvite} acceptInvite={acceptInvite} languages={languages}/>
                 <span className="heading">Recruit Your Crew</span>
                 <UserList name={"Nonfriends"} lists={[listFriends, listPending]} currentUserId={currentUserId} listUser={listUser} listRequested={listRequested} listReported={listReported}
-                    askReport={askReport} declineInvite={declineInvite} sendInvite={sendInvite} acceptInvite={acceptInvite}/>
+                    askReport={askReport} declineInvite={declineInvite} sendInvite={sendInvite} acceptInvite={acceptInvite} languages={languages}/>
             </div>
 
             {/* Dialog confirm */}

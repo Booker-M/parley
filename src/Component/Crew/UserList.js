@@ -1,7 +1,8 @@
 import React from 'react'
-// import './Crew.css'
 
 export default function UserList(props) {
+    console.log(props.languages)
+
     let ids = []
     props.lists.forEach(list => {
         list.forEach((item, index) => {
@@ -37,10 +38,9 @@ export default function UserList(props) {
                         <div className="viewWrapContentItem">
                             <span className="textHeaderCrew">{`${
                                 item.data().nickname
-                            } | ${item.data().myLanguage}`}</span>
-                            <span className="textItemCrew">{`About me: ${
-                                item.data().aboutMe ? item.data().aboutMe : 'Not available'
-                            }`}</span>
+                            } | ${props.languages.filter(lang => lang.code === item.data().myLanguage)[0].name}`}</span>
+                            <span className="textItemCrew">{item.data().aboutMe ? item.data().aboutMe : 'Not available'
+                            }</span>
                         </div>
                         <button className="btnCrewNo" onClick={() => props.name  === "Nonfriends" ? 
                             (reportedIds.includes(item.id) ? () => {} : props.askReport(item)) : props.declineInvite(item)}>

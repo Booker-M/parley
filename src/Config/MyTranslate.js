@@ -8,8 +8,6 @@ export const myTranslate = new Translate({
     projectId: "parley-4c999"
 });
 
-// export let languages = [];
-
 export const listLanguagesWithTarget = async function listLanguagesWithTarget() {
     // Lists available translation language with their names in a target language
     return myTranslate.getLanguages(localStorage.getItem(AppString.MY_LANGUAGE)).then((result) => result[0]);
