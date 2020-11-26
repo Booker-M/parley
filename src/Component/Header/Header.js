@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import './Header.css'
 import {AppString} from './../Const'
 import Button from './Button'
+import Confirmation from '../Confirmation/Confirmation'
 
 function Header(props) {
     const [isOpenDialogConfirmLogout, setOpenDialogConfimLogOut] = useState(false)
@@ -48,24 +49,6 @@ function Header(props) {
 
     const onProfileClick = () => {
         history.push('profile')
-    }
-
-    const renderDialogConfirmLogout = () => {
-        return (
-                <div>
-                    <div className="viewWrapTextDialogConfirmLogout">
-                        <span className="titleDialogConfirmLogout">Are you ready to logout?</span>
-                    </div>
-                    <div className="viewWrapButtonDialogConfirmLogout">
-                        <button className="btnYes" onClick={doLogout}>
-                            Yes
-                        </button>
-                        <button className="btnNo" onClick={hideDialogConfirmLogout}>
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-        )
     }
 
     if (props.login) {
@@ -118,9 +101,10 @@ function Header(props) {
 
                     {/* Dialog confirm */}
                     {isOpenDialogConfirmLogout ? (
-                        <div className="viewCoverScreen">
-                            {renderDialogConfirmLogout()}
-                        </div>
+                        <Confirmation
+                            text={`Are you ready to logout?`}
+                            acceptFunction={() => doLogout()}
+                            rejectFunction={() => hideDialogConfirmLogout()}/>
                     ) : null}
                 </div>
         )

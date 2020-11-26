@@ -8,6 +8,7 @@ import {AppString} from './../Const'
 import Header from './../Header/Header'
 import UserList from './UserList'
 import {listLanguagesWithTarget} from '../../Config/MyTranslate.js'
+import Confirmation from '../Confirmation/Confirmation'
 
 function Crew(props) {
     const [isLoading, setLoading] = useState(true);
@@ -135,25 +136,6 @@ function Crew(props) {
         setOpenReportConfirm(true)
     }
 
-    const renderReportConfirm = () => {
-        console.log(reportedUser)
-        return (
-            <div>
-                <div className="viewWrapTextDialogConfirmLogout">
-                    <span className="titleDialogConfirmLogout">Are you sure you want to report {reportedUser.data().nickname}?</span>
-                </div>
-                <div className="viewWrapButtonDialogConfirmLogout">
-                    <button className="btnYes" onClick={() => report(reportedUser)}>
-                        Yes
-                    </button>
-                    <button className="btnNo" onClick={() => setOpenReportConfirm(false)}>
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        )
-    }
-
     return (
         <div className="root">
             <Header
@@ -172,9 +154,10 @@ function Crew(props) {
 
             {/* Dialog confirm */}
             {isOpenReportConfirm ? (
-                <div className="viewCoverScreen">
-                    {renderReportConfirm()}
-                </div>
+                <Confirmation
+                    text={`Are you sure you want to report ${reportedUser.data().nickname}?`}
+                    acceptFunction={() => report(reportedUser)}
+                    rejectFunction={() => setOpenReportConfirm(false)}/>
             ) : null}
 
             {/* Loading */}

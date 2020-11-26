@@ -8,6 +8,7 @@ import './ChatBoard.css'
 import {AppString} from './../Const'
 import StickerSelect from './StickerSelect'
 import ListOfMessages from './ListOfMessages'
+import Confirmation from '../Confirmation/Confirmation'
 
 //Only works properly as a component for now
 export default class ChatBoard extends Component {
@@ -305,21 +306,17 @@ export default class ChatBoard extends Component {
 
                 {/* Dialog confirm */}
                 {this.state.isOpenReportConfirm ? (
-                    <div className="viewCoverScreen">
-                        <RenderReportConfirm
-                            text={`Are you sure you want to report and remove ${this.currentPeerUser.nickname}?`}
-                            acceptFunction={() => this.report()}
-                            rejectFunction={() => this.hideReport()}/>
-                    </div>
+                    <Confirmation
+                        text={`Are you sure you want to report and remove ${this.currentPeerUser.nickname}?`}
+                        acceptFunction={() => this.report()}
+                        rejectFunction={() => this.hideReport()}/>
                 ) : null}
 
                 {this.state.isOpenRemoveConfirm ? (
-                    <div className="viewCoverScreen">
-                        <RenderReportConfirm
-                            text={`Are you sure you want to remove ${this.currentPeerUser.nickname}?`}
-                            acceptFunction={() => this.remove()}
-                            rejectFunction={() => this.hideRemove()}/>
-                    </div>
+                    <Confirmation
+                        text={`Are you sure you want to remove ${this.currentPeerUser.nickname}?`}
+                        acceptFunction={() => this.remove()}
+                        rejectFunction={() => this.hideRemove()}/>
                 ) : null}
 
                 {/* Loading */}

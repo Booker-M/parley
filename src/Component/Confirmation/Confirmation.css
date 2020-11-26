@@ -1,0 +1,75 @@
+/* Dialog confirm */
+
+.viewCoverScreen {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.viewWrapTextDialogConfirmLogout {
+    width: 300px;
+    height: 50px;
+    background-color:#54b7d7;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.titleDialogConfirmLogout {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.viewWrapButtonDialogConfirmLogout {
+    flex-direction: row;
+    height: 100px;
+    width: 300px;
+    min-width: 300px;
+    background-color: white;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.btnYes {
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    margin-right: 20px;
+    background-color: #54b7d7;
+    border: 0px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btnNo {
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    margin-left: 20px;
+    padding: 5px;
+    background-color: #ea493f;
+    border: 0px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}

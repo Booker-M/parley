@@ -126,20 +126,6 @@
     height: 90vh;
 }
 
-/* Dialog confirm */
-
-.viewCoverScreen {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .btnCrewYes {
     width: max(min(100px, 11%), 50px);
     min-height: 40px;
