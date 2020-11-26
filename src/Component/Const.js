@@ -12,5 +12,6 @@ export const AppString = {
     PENDING: "pending",
     FRIENDS: "friends",
     REQUESTED: "requested",
+    REPORTED: "reported",
     PARLEY_ACCOUNT_ID: "z9yc9RbriNAYKUOgag7r"
 }

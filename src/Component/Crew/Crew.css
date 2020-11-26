@@ -32,7 +32,7 @@
 
 /* List user */
 
-.viewListNonfriends {
+.viewList {
     overflow-y: scroll;
     /* height: 90vh; */
     padding-top: 10px;
@@ -40,16 +40,16 @@
     width: 99%;
 }
 
-.viewListNonfriends::-webkit-scrollbar-track {
+.viewList::-webkit-scrollbar-track {
     padding: 2px 0;
     background-color: #e8e8e8;
 }
 
-.viewListNonfriends::-webkit-scrollbar {
+.viewList::-webkit-scrollbar {
     width: 6px;
 }
 
-.viewListNonfriends::-webkit-scrollbar-thumb {
+.viewList::-webkit-scrollbar-thumb {
     border-radius: 10px;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #296972;
