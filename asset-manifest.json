@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/parley/static/css/main.57cf0693.chunk.css",
-    "main.js": "/parley/static/js/main.947475ca.chunk.js",
-    "main.js.map": "/parley/static/js/main.947475ca.chunk.js.map",
+    "main.css": "/parley/static/css/main.f0b1e640.chunk.css",
+    "main.js": "/parley/static/js/main.f63f820f.chunk.js",
+    "main.js.map": "/parley/static/js/main.f63f820f.chunk.js.map",
     "runtime-main.js": "/parley/static/js/runtime-main.e1770dcc.js",
     "runtime-main.js.map": "/parley/static/js/runtime-main.e1770dcc.js.map",
     "static/css/2.ffcf707b.chunk.css": "/parley/static/css/2.ffcf707b.chunk.css",
-    "static/js/2.27e2419a.chunk.js": "/parley/static/js/2.27e2419a.chunk.js",
-    "static/js/2.27e2419a.chunk.js.map": "/parley/static/js/2.27e2419a.chunk.js.map",
+    "static/js/2.c25b1af4.chunk.js": "/parley/static/js/2.c25b1af4.chunk.js",
+    "static/js/2.c25b1af4.chunk.js.map": "/parley/static/js/2.c25b1af4.chunk.js.map",
     "index.html": "/parley/index.html",
-    "precache-manifest.1ac22db25c98cf24f75b1ced3a1be028.js": "/parley/precache-manifest.1ac22db25c98cf24f75b1ced3a1be028.js",
+    "precache-manifest.c48e6e6dcd27f7fcf1d48d926e37eb19.js": "/parley/precache-manifest.c48e6e6dcd27f7fcf1d48d926e37eb19.js",
     "service-worker.js": "/parley/service-worker.js",
     "static/css/2.ffcf707b.chunk.css.map": "/parley/static/css/2.ffcf707b.chunk.css.map",
-    "static/css/main.57cf0693.chunk.css.map": "/parley/static/css/main.57cf0693.chunk.css.map",
-    "static/js/2.27e2419a.chunk.js.LICENSE.txt": "/parley/static/js/2.27e2419a.chunk.js.LICENSE.txt",
+    "static/css/main.f0b1e640.chunk.css.map": "/parley/static/css/main.f0b1e640.chunk.css.map",
+    "static/js/2.c25b1af4.chunk.js.LICENSE.txt": "/parley/static/js/2.c25b1af4.chunk.js.LICENSE.txt",
     "static/media/confusedParrot.gif": "/parley/static/media/confusedParrot.d83bf19e.gif",
     "static/media/dealWithItParrot.gif": "/parley/static/media/dealWithItParrot.b200f4c7.gif",
     "static/media/ic_crew.png": "/parley/static/media/ic_crew.9ec46ae5.png",
@@ -29,8 +29,8 @@
   "entrypoints": [
     "static/js/runtime-main.e1770dcc.js",
     "static/css/2.ffcf707b.chunk.css",
-    "static/js/2.27e2419a.chunk.js",
-    "static/css/main.57cf0693.chunk.css",
-    "static/js/main.947475ca.chunk.js"
+    "static/js/2.c25b1af4.chunk.js",
+    "static/css/main.f0b1e640.chunk.css",
+    "static/js/main.f63f820f.chunk.js"
   ]
 }
