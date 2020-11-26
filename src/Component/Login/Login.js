@@ -40,69 +40,68 @@ function Login() {
                     .where(AppString.ID, '==', user.uid)
                     .get()
 
-                    if (result.docs.length === 0) {
-                        // Set new data since this is a new user
-                        myFirestore
-                            .collection('users')
+                if (result.docs.length === 0) {
+                    // Set new data since this is a new user
+                    myFirestore
+                        .collection('users')
+                        .doc(user.uid)
+                        .set({
+                            id: user.uid,
+                            nickname: user.displayName,
+                            aboutMe: '',
+                            myLanguage: 'en',
+                            photoUrl: user.photoURL
+                        })
+                        .then(data => {
+                            // Write user info to local
+                            localStorage.setItem(AppString.ID, user.uid)
+                            localStorage.setItem(AppString.NICKNAME, user.displayName)
+                            localStorage.setItem(AppString.PHOTO_URL, user.photoURL)
+                            localStorage.setItem(AppString.MY_LANGUAGE, 'en')
+                            localStorage.setItem(AppString.PENDING, [])
+                            localStorage.setItem(AppString.FRIENDS, [])
+                            setIsLoading(false)
+                            history.push('/main');
+                        })
+                        .then(
+                            myFirestore
+                            .collection(AppString.NODE_USERS)
                             .doc(user.uid)
-                            .set({
-                                id: user.uid,
-                                nickname: user.displayName,
-                                aboutMe: '',
-                                myLanguage: 'en',
-                                photoUrl: user.photoURL
-                            })
-                            .then(data => {
-                                // Write user info to local
-                                localStorage.setItem(AppString.ID, user.uid)
-                                localStorage.setItem(AppString.NICKNAME, user.displayName)
-                                localStorage.setItem(AppString.PHOTO_URL, user.photoURL)
-                                localStorage.setItem(AppString.MY_LANGUAGE, 'en')
-                                localStorage.setItem(AppString.PENDING, [])
-                                localStorage.setItem(AppString.FRIENDS, [])
-                                setIsLoading(false)
-                                history.push('/main');
-                            })
-                            .then(
-                                myFirestore
-                                .collection(AppString.NODE_USERS)
-                                .doc(user.uid)
-                                .collection(AppString.FRIENDS)
-                                .doc(AppString.PARLEY_ACCOUNT_ID)
-                                .set({id: AppString.PARLEY_ACCOUNT_ID})
-                            )
-                            .then(
-                                sendMessage("Welcome to Parley!", user.uid, 0),
-                                sendMessage("Click the message below to translate:", user.uid, 1),
-                                sendMessage("Tebrikler! İlk mesajınızı çevirdiniz", user.uid , 2),
-                                sendMessage("You can update your language and profile in your account settings", user.uid, 3),
-                            )
-                    } else {
-                        // Write user info to local
-                        localStorage.setItem(AppString.ID, result.docs[0].data().id)
-                        localStorage.setItem(
-                            AppString.NICKNAME,
-                            result.docs[0].data().nickname
+                            .collection(AppString.FRIENDS)
+                            .doc(AppString.PARLEY_ACCOUNT_ID)
+                            .set({id: AppString.PARLEY_ACCOUNT_ID})
                         )
-                        localStorage.setItem(
-                            AppString.PHOTO_URL,
-                            result.docs[0].data().photoUrl
+                        .then(
+                            sendMessage("Welcome to Parley!", user.uid, 0),
+                            sendMessage("Click the message below to translate:", user.uid, 1),
+                            sendMessage("Tebrikler! İlk mesajınızı çevirdiniz", user.uid , 2),
+                            sendMessage("You can update your language and profile in your account settings", user.uid, 3),
                         )
-                        localStorage.setItem(
-                            AppString.ABOUT_ME,
-                            result.docs[0].data().aboutMe
-                        )
-                        localStorage.setItem(
-                            AppString.MY_LANGUAGE,
-                            result.docs[0].data().myLanguage
-                        )
-                        setIsLoading(false);
-                        history.push('/main');
-                    }
+                } else {
+                    // Write user info to local
+                    localStorage.setItem(AppString.ID, result.docs[0].data().id)
+                    localStorage.setItem(
+                        AppString.NICKNAME,
+                        result.docs[0].data().nickname
+                    )
+                    localStorage.setItem(
+                        AppString.PHOTO_URL,
+                        result.docs[0].data().photoUrl
+                    )
+                    localStorage.setItem(
+                        AppString.ABOUT_ME,
+                        result.docs[0].data().aboutMe
+                    )
+                    localStorage.setItem(
+                        AppString.MY_LANGUAGE,
+                        result.docs[0].data().myLanguage
+                    )
+                    setIsLoading(false);
+                    history.push('/main');
                 }
-                setIsLoading(false)
-                history.push('/main')
             }
+            setIsLoading(false)
+            history.push('/main')
         })
         .catch(err => {
             setIsLoading(false)
