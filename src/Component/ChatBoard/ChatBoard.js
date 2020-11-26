@@ -16,7 +16,9 @@ export default class ChatBoard extends Component {
         this.state = {
             isLoading: false,
             isShowSticker: false,
-            inputValue: ''
+            inputValue: '',
+            isOpenReportConfirm: false,
+            isOpenRemoveConfirm: false
         }
         this.currentUserId = localStorage.getItem(AppString.ID)
         this.listMessage = []
@@ -192,19 +194,57 @@ export default class ChatBoard extends Component {
         return hash
     }
 
+    remove = () => {
+        this.hideRemove()
+    }
+
+    report = () => {
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(this.currentUserId)
+            .collection(AppString.REPORTED)
+            .doc(this.currentPeerUser.id)
+            .set({id: this.currentPeerUser.id})
+            this.setState({isOpenReportConfirm: false})
+        this.hideReport()
+    }
+
+    askReport = () => {
+        this.setState({isOpenReportConfirm: true})
+    }
+
+    hideReport = () => {
+        this.setState({isOpenReportConfirm: false})
+    }
+
+    askRemove = () => {
+        this.setState({isOpenRemoveConfirm: true})
+    }
+
+    hideRemove = () => {
+        this.setState({isOpenRemoveConfirm: false})
+    }
+
     render() {
         return (
             <div className="viewChatBoard">
                 {/* Header */}
                 <div className="headerChatBoard">
                     <img
-                        className="viewAvatarItem"
+                        className="viewAvatarItemChat"
                         src={this.currentPeerUser.photoUrl}
                         alt="icon avatar"
                     />
                     <span className="textHeaderChatBoard">
                     {this.currentPeerUser.nickname}
                     </span>
+                    <div className="dropdown">
+                    <button className="dropbtn">Options</button>
+                    <div className="dropdown-content">
+                        <a onClick={this.askReport}>Report</a>
+                        <a onClick={this.askRemove}>Remove</a>
+                    </div>
+                    </div>
                 </div>
 
                 {/* List message */}
@@ -263,6 +303,25 @@ export default class ChatBoard extends Component {
                     />
                 </div>
 
+                {/* Dialog confirm */}
+                {this.state.isOpenReportConfirm ? (
+                    <div className="viewCoverScreen">
+                        <RenderReportConfirm
+                            text={`Are you sure you want to report and remove ${this.currentPeerUser.nickname}?`}
+                            acceptFunction={() => this.report()}
+                            rejectFunction={() => this.hideReport()}/>
+                    </div>
+                ) : null}
+
+                {this.state.isOpenRemoveConfirm ? (
+                    <div className="viewCoverScreen">
+                        <RenderReportConfirm
+                            text={`Are you sure you want to remove ${this.currentPeerUser.nickname}?`}
+                            acceptFunction={() => this.remove()}
+                            rejectFunction={() => this.hideRemove()}/>
+                    </div>
+                ) : null}
+
                 {/* Loading */}
                 {this.state.isLoading ? (
                     <div className="viewLoading">
@@ -277,4 +336,22 @@ export default class ChatBoard extends Component {
             </div>
         )
     }
+}
+
+function RenderReportConfirm(props) {
+    return (
+        <div>
+            <div className="viewWrapTextDialogConfirmLogout">
+                <span className="titleDialogConfirmLogout">{props.text}</span>
+            </div>
+            <div className="viewWrapButtonDialogConfirmLogout">
+                <button className="btnYes" onClick={props.acceptFunction}>
+                    Yes
+                </button>
+                <button className="btnNo" onClick={props.rejectFunction}>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    )
 }
