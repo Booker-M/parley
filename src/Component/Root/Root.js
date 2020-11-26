@@ -7,8 +7,8 @@ import Crew from '../Crew/Crew'
 import Profile from '../Profile/Profile'
 import {toast, ToastContainer} from 'react-toastify'
 
-class Root extends Component {
-    showToast = (type, message) => {
+function Root() {
+    const showToast = (type, message) => {
         // 0 = warning, 1 = success
         switch (type) {
             case 0:
@@ -22,7 +22,6 @@ class Root extends Component {
         }
     }
 
-    render() {
         return (
             <Router>
                 <div>
@@ -35,30 +34,29 @@ class Root extends Component {
                         <Route
                             exact
                             path="/"
-                            render={props => <Login showToast={this.showToast} {...props} />}
+                            render={props => <Login showToast={showToast} {...props} />}
                         />
                         <Route
                             exact
                             path="/main"
-                            render={props => <Main showToast={this.showToast} {...props} />}
+                            render={props => <Main showToast={showToast} {...props} />}
                         />
                         <Route
                             exact
                             path="/crew"
-                            render={props => <Crew showToast={this.showToast} {...props} />}
+                            render={props => <Crew showToast={showToast} {...props} />}
                         />
                         <Route
                             exact
                             path="/profile"
                             render={props => (
-                                <Profile showToast={this.showToast} {...props} />
+                                <Profile showToast={showToast} {...props} />
                             )}
                         />
                     </Switch>
                 </div>
             </Router>
         )
-    }
 }
 
 export default Root
