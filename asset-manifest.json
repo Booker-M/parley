@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/parley/static/css/main.bc20250b.chunk.css",
+    "main.css": "/parley/static/css/main.01ed5b8c.chunk.css",
     "main.js": "/parley/static/js/main.368460fc.chunk.js",
     "main.js.map": "/parley/static/js/main.368460fc.chunk.js.map",
     "runtime-main.js": "/parley/static/js/runtime-main.e1770dcc.js",
@@ -9,10 +9,10 @@
     "static/js/2.0aea4ea8.chunk.js": "/parley/static/js/2.0aea4ea8.chunk.js",
     "static/js/2.0aea4ea8.chunk.js.map": "/parley/static/js/2.0aea4ea8.chunk.js.map",
     "index.html": "/parley/index.html",
-    "precache-manifest.1a1d8f5ed642e9ef9bfc028e3562737c.js": "/parley/precache-manifest.1a1d8f5ed642e9ef9bfc028e3562737c.js",
+    "precache-manifest.6ee0901b336544aac707e00a25d25957.js": "/parley/precache-manifest.6ee0901b336544aac707e00a25d25957.js",
     "service-worker.js": "/parley/service-worker.js",
     "static/css/2.ffcf707b.chunk.css.map": "/parley/static/css/2.ffcf707b.chunk.css.map",
-    "static/css/main.bc20250b.chunk.css.map": "/parley/static/css/main.bc20250b.chunk.css.map",
+    "static/css/main.01ed5b8c.chunk.css.map": "/parley/static/css/main.01ed5b8c.chunk.css.map",
     "static/js/2.0aea4ea8.chunk.js.LICENSE.txt": "/parley/static/js/2.0aea4ea8.chunk.js.LICENSE.txt",
     "static/media/confusedParrot.gif": "/parley/static/media/confusedParrot.d83bf19e.gif",
     "static/media/dealWithItParrot.gif": "/parley/static/media/dealWithItParrot.b200f4c7.gif",
@@ -30,7 +30,7 @@
     "static/js/runtime-main.e1770dcc.js",
     "static/css/2.ffcf707b.chunk.css",
     "static/js/2.0aea4ea8.chunk.js",
-    "static/css/main.bc20250b.chunk.css",
+    "static/css/main.01ed5b8c.chunk.css",
     "static/js/main.368460fc.chunk.js"
   ]
 }
