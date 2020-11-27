@@ -7,8 +7,7 @@ import {AppString} from './../Const'
 import Button from './Button'
 import Confirmation from '../Confirmation/Confirmation'
 import {myFirestore} from '../../Config/MyFirebase'
-import Badge from '@material-ui/core/Badge';
-import { withStyles } from '@material-ui/core/styles';
+import { Badge, withStyles } from '@material-ui/core';
 
 
 export default function Header(props) {
