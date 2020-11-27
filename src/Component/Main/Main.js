@@ -22,18 +22,8 @@ function Main(props) {
     const currentUserNickname = localStorage.getItem(AppString.NICKNAME)
 
     useEffect(() => {
-        checkLogin();
-    }, []);
-
-    const checkLogin = () => {
-        if (!localStorage.getItem(AppString.ID)) {
-            setLoading(false)
-            history.push('/')
-
-        } else {
-            getListUser()
-        }
-    }
+        getListUser()
+    }, [])
 
     const getListUser = async () => {
         const allUsers = await myFirestore.collection(AppString.NODE_USERS).get()
@@ -99,6 +89,7 @@ function Main(props) {
                     {currentPeerUser ? (
                         <ChatBoard
                             currentPeerUser={currentPeerUser}
+                            history={history}
                         />
                     ) : (
                         <WelcomeBoard

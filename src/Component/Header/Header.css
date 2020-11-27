@@ -41,6 +41,18 @@
     opacity: 1;
 }
 
+.badge-button {
+    float: right;
+}
+
+.badge {
+    /* right: -3px; */
+    /* top: 10px; */
+    /* padding: '0 4px'; */
+    position: relative;
+    background-color: #ea493f;
+}
+
 .icon {
     width: 30px;
     height: 30px;

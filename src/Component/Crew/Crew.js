@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import ReactLoading from 'react-loading'
 import {withRouter} from 'react-router-dom'
 import {myFirestore} from '../../Config/MyFirebase'
-import { useHistory } from "react-router-dom";
 import './Crew.css'
 import {AppString} from './../Const'
 import Header from './../Header/Header'
@@ -13,6 +12,8 @@ import Confirmation from '../Confirmation/Confirmation'
 function Crew(props) {
     const [isLoading, setLoading] = useState(true);
     const [isOpenReportConfirm, setOpenReportConfirm] = useState(false)
+    const [isOpenUnreportConfirm, setOpenUnreportConfirm] = useState(false)
+    const [isOpenUninviteConfirm, setOpenUninviteConfirm] = useState(false)
     const [listUser, setListUser] = useState([])
     const [listPending, setListPending] = useState([])
     const [listFriends, setListFriends] = useState([])
@@ -20,26 +21,16 @@ function Crew(props) {
     const [listReported, setListReported] = useState([])
     const [reportedUser, setReportedUser] = useState("")
     const [languages, setLanguages] = useState([])
-    const history = useHistory();
 
     const currentUserId = localStorage.getItem(AppString.ID)
 
     useEffect(() => {
-        checkLogin()
+        getListUser();
         updateLanguages()
     }, [])
 
     async function updateLanguages() {
         setLanguages(await listLanguagesWithTarget())
-    }
-
-    const checkLogin = () => {
-        if (!localStorage.getItem(AppString.ID)) {
-            setLoading(false);
-            history.push('/');
-        } else {
-            getListUser();
-        }
     }
 
     const getListUser = async () => {
@@ -56,7 +47,7 @@ function Crew(props) {
         setLoading(false)
     }
 
-    const sendInvite = (user) => {
+    const invite = (user) => {
         setLoading(true)
         myFirestore
             .collection(AppString.NODE_USERS)
@@ -71,6 +62,29 @@ function Crew(props) {
             .doc(currentUserId)
             .set({id: currentUserId})).then(
         getListUser())
+    }
+
+    const uninvite = (user) => {
+        setLoading(true)
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(currentUserId)
+            .collection(AppString.REQUESTED)
+            .doc(user.id)
+            .delete().then(
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(user.id)
+            .collection(AppString.PENDING)
+            .doc(currentUserId)
+            .delete()).then(
+        getListUser())
+        setOpenUninviteConfirm(false)
+    }
+
+    const askUninvite = (user) => {
+        setReportedUser(user)
+        setOpenUninviteConfirm(true)
     }
 
     const acceptInvite = (user) => {
@@ -136,6 +150,23 @@ function Crew(props) {
         setOpenReportConfirm(true)
     }
 
+    const unreport = (user) => {
+        setLoading(true)
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(currentUserId)
+            .collection(AppString.REPORTED)
+            .doc(user.id)
+            .delete().then(
+        getListUser())
+        setOpenUnreportConfirm(false)
+    }
+
+    const askUnreport = (user) => {
+        setReportedUser(user)
+        setOpenUnreportConfirm(true)
+    }
+
     return (
         <div className="root">
             <Header
@@ -146,10 +177,10 @@ function Crew(props) {
             <div className="bodyCrew">
                 <span className="heading">{listPending.length > 0 ? "Pending Crewmates" : ""}</span>
                 <UserList className={"viewList"} name={"Pending"} lists={[listPending]} currentUserId={currentUserId} listUser={listUser} listRequested={listRequested} listReported={listReported}
-                    askReport={askReport} declineInvite={declineInvite} sendInvite={sendInvite} acceptInvite={acceptInvite} languages={languages}/>
+                    declineInvite={declineInvite} acceptInvite={acceptInvite} languages={languages}/>
                 <span className="heading">Find Your Crew</span>
                 <UserList className={"viewList"} name={"Nonfriends"} lists={[listFriends, listPending]} currentUserId={currentUserId} listUser={listUser} listRequested={listRequested} listReported={listReported}
-                    askReport={askReport} declineInvite={declineInvite} sendInvite={sendInvite} acceptInvite={acceptInvite} languages={languages}/>
+                    askReport={askReport} askUnreport={askUnreport} invite={invite} askUninvite={askUninvite} languages={languages}/>
             </div>
 
             {/* Dialog confirm */}
@@ -158,6 +189,20 @@ function Crew(props) {
                     text={`Are you sure you want to report ${reportedUser.data().nickname}?`}
                     acceptFunction={() => report(reportedUser)}
                     rejectFunction={() => setOpenReportConfirm(false)}/>
+            ) : null}
+
+            {isOpenUnreportConfirm ? (
+                <Confirmation
+                    text={`Are you sure you want to remove your report of ${reportedUser.data().nickname}?`}
+                    acceptFunction={() => unreport(reportedUser)}
+                    rejectFunction={() => setOpenUnreportConfirm(false)}/>
+            ) : null}
+
+            {isOpenUninviteConfirm ? (
+                <Confirmation
+                    text={`Are you sure you want to remove your invite of ${reportedUser.data().nickname}?`}
+                    acceptFunction={() => uninvite(reportedUser)}
+                    rejectFunction={() => setOpenUninviteConfirm(false)}/>
             ) : null}
 
             {/* Loading */}

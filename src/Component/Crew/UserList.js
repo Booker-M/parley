@@ -43,11 +43,11 @@ export default function UserList(props) {
                             }</span>
                         </div>
                         <button className="btnCrewNo" onClick={() => props.name  === "Nonfriends" ? 
-                            (reportedIds.includes(item.id) ? () => {} : props.askReport(item)) : props.declineInvite(item)}>
+                            (reportedIds.includes(item.id) ?  props.askUnreport(item) : props.askReport(item)) : props.declineInvite(item)}>
                         {props.name === "Nonfriends" ? 
                             (reportedIds.includes(item.id) ? "Reported" : "Report") : "Decline"}</button>
                         <button className="btnCrewYes" onClick={() => props.name  === "Nonfriends" ? 
-                            (requestedIds.includes(item.id) ? () => {} : props.sendInvite(item)) : props.acceptInvite(item)}>
+                            (requestedIds.includes(item.id) ? props.askUninvite(item) : props.invite(item)) : props.acceptInvite(item)}>
                         {props.name === "Nonfriends" ? 
                             (requestedIds.includes(item.id) ? "Pending" : "Invite") : "Accept"}</button>
                     </div>

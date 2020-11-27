@@ -9,6 +9,7 @@ import {AppString} from './../Const'
 import StickerSelect from './StickerSelect'
 import ListOfMessages from './ListOfMessages'
 import Confirmation from '../Confirmation/Confirmation'
+// import { useHistory } from "react-router-dom";
 
 //Only works properly as a component for now
 export default class ChatBoard extends Component {
@@ -27,6 +28,7 @@ export default class ChatBoard extends Component {
         this.groupChatId = null
         this.removeListener = null
         this.currentPhotoFile = null
+        // this.history = useHistory();
     }
 
     componentDidUpdate() {
@@ -200,6 +202,7 @@ export default class ChatBoard extends Component {
     }
 
     report = () => {
+        this.setState({isLoading: true})
         myFirestore
             .collection(AppString.NODE_USERS)
             .doc(this.currentUserId)
@@ -207,7 +210,26 @@ export default class ChatBoard extends Component {
             .doc(this.currentPeerUser.id)
             .set({id: this.currentPeerUser.id})
             this.setState({isOpenReportConfirm: false})
+        this.remove()
         this.hideReport()
+    }
+
+    remove = () => {
+        this.setState({isLoading: true})
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(this.currentUserId)
+            .collection(AppString.FRIENDS)
+            .doc(this.currentPeerUser.id)
+            .delete().then(
+        myFirestore
+            .collection(AppString.NODE_USERS)
+            .doc(this.currentPeerUser.id)
+            .collection(AppString.FRIENDS)
+            .doc(this.currentUserId)
+            .delete())
+        this.currentPeerUser = null
+        this.props.history.push('/')
     }
 
     askReport = () => {
