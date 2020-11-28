@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/parley/static/css/main.01ed5b8c.chunk.css",
-    "main.js": "/parley/static/js/main.412a5c84.chunk.js",
-    "main.js.map": "/parley/static/js/main.412a5c84.chunk.js.map",
+    "main.js": "/parley/static/js/main.4f3dc09c.chunk.js",
+    "main.js.map": "/parley/static/js/main.4f3dc09c.chunk.js.map",
     "runtime-main.js": "/parley/static/js/runtime-main.e1770dcc.js",
     "runtime-main.js.map": "/parley/static/js/runtime-main.e1770dcc.js.map",
     "static/css/2.ffcf707b.chunk.css": "/parley/static/css/2.ffcf707b.chunk.css",
     "static/js/2.da3523e4.chunk.js": "/parley/static/js/2.da3523e4.chunk.js",
     "static/js/2.da3523e4.chunk.js.map": "/parley/static/js/2.da3523e4.chunk.js.map",
     "index.html": "/parley/index.html",
-    "precache-manifest.c97eb30ea6ba098374c5e4ecd459db11.js": "/parley/precache-manifest.c97eb30ea6ba098374c5e4ecd459db11.js",
+    "precache-manifest.d3cfb005ed1648329ff01f9b433e3f09.js": "/parley/precache-manifest.d3cfb005ed1648329ff01f9b433e3f09.js",
     "service-worker.js": "/parley/service-worker.js",
     "static/css/2.ffcf707b.chunk.css.map": "/parley/static/css/2.ffcf707b.chunk.css.map",
     "static/css/main.01ed5b8c.chunk.css.map": "/parley/static/css/main.01ed5b8c.chunk.css.map",
@@ -31,6 +31,6 @@
     "static/css/2.ffcf707b.chunk.css",
     "static/js/2.da3523e4.chunk.js",
     "static/css/main.01ed5b8c.chunk.css",
-    "static/js/main.412a5c84.chunk.js"
+    "static/js/main.4f3dc09c.chunk.js"
   ]
 }
