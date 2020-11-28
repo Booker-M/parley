@@ -120,7 +120,7 @@ export default function Header(props) {
                             class={"icon"}
                             image={images.ic_message}
                             function={onMessageClick}
-                            text={"Messager"}
+                            text={"Messages"}
                         />
                     </div>
 

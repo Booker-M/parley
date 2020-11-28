@@ -59,14 +59,9 @@ export default class ChatBoard extends Component {
         }
         this.listMessage.length = 0
         this.setState({isLoading: true})
-        if (
-            this.hashString(this.currentUserId) <=
-            this.hashString(this.currentPeerUser.id)
-        ) {
-            this.groupChatId = `${this.currentUserId}-${this.currentPeerUser.id}`
-        } else {
-            this.groupChatId = `${this.currentPeerUser.id}-${this.currentUserId}`
-        }
+
+        this.groupChatId = this.hashString(this.currentUserId) <= this.hashString(this.currentPeerUser.id) 
+            ? `${this.currentUserId}-${this.currentPeerUser.id}` : `${this.currentPeerUser.id}-${this.currentUserId}`
 
         // Get history and listen for new data added
         this.removeListener = myFirestore

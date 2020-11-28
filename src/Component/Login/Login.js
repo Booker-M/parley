@@ -116,8 +116,8 @@ export default function Login() {
         if (content.trim() === '') {
             return
         }
-
-        const groupChatId = `${user}-${AppString.PARLEY_ACCOUNT_ID}`
+        const groupChatId = hashString(user) <= hashString(AppString.PARLEY_ACCOUNT_ID) 
+            ? `${user}-${AppString.PARLEY_ACCOUNT_ID}` : `${AppString.PARLEY_ACCOUNT_ID}-${user}`
 
         const timestamp = moment()
             .add(order, "ms")
@@ -132,8 +132,6 @@ export default function Login() {
             type: 0
         }
 
-        console.log(itemMessage)
-
         myFirestore
             .collection(AppString.NODE_MESSAGES)
             .doc(groupChatId)
@@ -143,6 +141,15 @@ export default function Login() {
             .catch(err => {
                 toast.error(err.toString())
             })
+    }
+
+    const hashString = str => {
+        let hash = 0
+        for (let i = 0; i < str.length; i++) {
+            hash += Math.pow(str.charCodeAt(i) * 31, str.length - i)
+            hash = hash & hash // Convert to 32bit integer
+        }
+        return hash
     }
 
     return (
