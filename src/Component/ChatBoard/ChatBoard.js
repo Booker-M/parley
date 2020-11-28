@@ -356,21 +356,3 @@ export default class ChatBoard extends Component {
         )
     }
 }
-
-function RenderReportConfirm(props) {
-    return (
-        <div>
-            <div className="viewWrapTextDialogConfirmLogout">
-                <span className="titleDialogConfirmLogout">{props.text}</span>
-            </div>
-            <div className="viewWrapButtonDialogConfirmLogout">
-                <button className="btnYes" onClick={props.acceptFunction}>
-                    Yes
-                </button>
-                <button className="btnNo" onClick={props.rejectFunction}>
-                    Cancel
-                </button>
-            </div>
-        </div>
-    )
-}

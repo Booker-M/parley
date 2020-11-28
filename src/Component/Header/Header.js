@@ -102,7 +102,7 @@ export default function Header(props) {
                             function={onProfileClick}
                             text={"Profile"}
                         />
-                        <div class={"badge-button"}>
+                        <div className={"badge-button"}>
                         <StyledBadge badgeContent={listPending.length}>
                             <Button
                                 class={"icon"}

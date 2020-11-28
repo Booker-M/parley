@@ -1,8 +1,6 @@
 import React from 'react'
 
 export default function UserList(props) {
-    console.log(props.languages)
-
     let ids = []
     props.lists.forEach(list => {
         list.forEach((item, index) => {

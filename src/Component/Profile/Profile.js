@@ -10,7 +10,6 @@ import {AppString} from './../Const'
 import {listLanguagesWithTarget} from '../../Config/MyTranslate.js'
 import Header from './../Header/Header'
 import LanguageSelector from './LanguageSelector'
-import Tooltip from '@material-ui/core/Tooltip';
 
 function Profile() {
     const [isLoading, setLoading] = useState(false)
@@ -20,9 +19,9 @@ function Profile() {
     const [photoUrl, setPhotoUrl] = useState(localStorage.getItem(AppString.PHOTO_URL))
     const [myLanguage, setLanguage] = useState(localStorage.getItem(AppString.MY_LANGUAGE))
     const [languages, setLanguages] = useState([])
+    const [newAvatar, setNewAvatar] = useState(null);
     const history = useHistory();
 
-    let newAvatar = null;
     let refInput
 
     useEffect(() => {
@@ -63,7 +62,7 @@ function Profile() {
                 console.log("This is not an image file!")
                 return
             }
-            newAvatar = event.target.files[0]
+            setNewAvatar(event.target.files[0])
             setPhotoUrl(URL.createObjectURL(event.target.files[0]))
         } else {
             console.log("Something was wrong with the input file");
@@ -72,6 +71,7 @@ function Profile() {
 
     function uploadAvatar(event) {
         setLoading(true)
+        console.log(newAvatar)
         if (newAvatar) {
             const uploadTask = myStorage
                 .ref()
@@ -124,6 +124,8 @@ function Profile() {
                 }
                 setLoading(false)
                 console.log("Success")
+                console.log(isUpdatePhotoUrl)
+                console.log(newInfo)
             })
     }
 
