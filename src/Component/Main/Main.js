@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import ReactLoading from 'react-loading'
-import {withRouter} from 'react-router-dom'
 import {myFirestore} from '../../Config/MyFirebase'
 import WelcomeBoard from '../WelcomeBoard/WelcomeBoard'
 import './Main.css'
@@ -10,7 +9,7 @@ import {AppString} from './../Const'
 import Header from './../Header/Header'
 
 
-function Main(props) {
+export default function Main(props) {
     const [isLoading, setLoading] = useState('true');
     const [currentPeerUser, setCurrentPeerUser] = useState(null)
     const [listUser, setListUser] = useState([])
@@ -116,5 +115,3 @@ function Main(props) {
 
 
 }
-    
-export default withRouter(Main)

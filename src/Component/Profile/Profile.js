@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useHistory } from "react-router-dom";
 import ReactLoading from 'react-loading'
-import {withRouter} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 import {myFirestore, myStorage} from '../../Config/MyFirebase'
 import images from './../Themes/Images'
@@ -10,8 +9,10 @@ import {AppString} from './../Const'
 import {listLanguagesWithTarget} from '../../Config/MyTranslate.js'
 import Header from './../Header/Header'
 import LanguageSelector from './LanguageSelector'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Profile() {
+export default function Profile() {
     const [isLoading, setLoading] = useState(false)
     const [id] = useState(localStorage.getItem(AppString.ID))
     const [nickname, setNickname] = useState(localStorage.getItem(AppString.NICKNAME))
@@ -59,19 +60,18 @@ function Profile() {
         if(event.target.files && event.target.files[0]) {
             const prefixFiletype = event.target.files[0].type.toString()
             if (prefixFiletype.indexOf(AppString.PREFIX_IMAGE) !== 0) {
-                console.log("This is not an image file!")
+                toast.error("This is not an image file!")
                 return
             }
             setNewAvatar(event.target.files[0])
             setPhotoUrl(URL.createObjectURL(event.target.files[0]))
         } else {
-            console.log("Something was wrong with the input file");
+            toast.error("Something was wrong with the input file");
         }
     }
 
-    function uploadAvatar(event) {
+    function uploadAvatar() {
         setLoading(true)
-        console.log(newAvatar)
         if (newAvatar) {
             const uploadTask = myStorage
                 .ref()
@@ -81,7 +81,7 @@ function Profile() {
                 AppString.UPLOAD_CHANGED,
                 null,
                 err => {
-                    console.log("THERE HAS BEEN AN ERROR")
+                    toast.error(err.message)
                 },
                 () => {
                     uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
@@ -123,9 +123,7 @@ function Profile() {
                     localStorage.setItem(AppString.PHOTO_URL, downloadURL)
                 }
                 setLoading(false)
-                console.log("Success")
-                console.log(isUpdatePhotoUrl)
-                console.log(newInfo)
+                toast.success('Updated info successfully')
             })
     }
 
@@ -194,5 +192,3 @@ function Profile() {
         </div>
     )
 }
-
-export default withRouter(Profile)

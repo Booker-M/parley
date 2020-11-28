@@ -8,19 +8,6 @@ import Profile from '../Profile/Profile'
 import {toast, ToastContainer} from 'react-toastify'
 
 function Root() {
-    const showToast = (type, message) => {
-        // 0 = warning, 1 = success
-        switch (type) {
-            case 0:
-                toast.warning(message)
-                break
-            case 1:
-                toast.success(message)
-                break
-            default:
-                break
-        }
-    }
 
         return (
             <Router>
@@ -34,24 +21,22 @@ function Root() {
                         <Route
                             exact
                             path="/"
-                            render={props => <Login showToast={showToast} {...props} />}
+                            render={() => <Login />}
                         />
                         <Route
                             exact
                             path="/main"
-                            render={props => <Main showToast={showToast} {...props} />}
+                            render={() => <Main />}
                         />
                         <Route
                             exact
                             path="/crew"
-                            render={props => <Crew showToast={showToast} {...props} />}
+                            render={() => <Crew />}
                         />
                         <Route
                             exact
                             path="/profile"
-                            render={props => (
-                                <Profile showToast={showToast} {...props} />
-                            )}
+                            render={() => <Profile />}
                         />
                     </Switch>
                 </div>

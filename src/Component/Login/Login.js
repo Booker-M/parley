@@ -1,15 +1,16 @@
 import firebase from 'firebase'
 import React, {useState, useEffect} from 'react'
 import ReactLoading from 'react-loading'
-import {withRouter} from 'react-router-dom'
 import {myFirebase, myFirestore} from '../../Config/MyFirebase'
 import './Login.css'
 import { useHistory } from "react-router-dom";
 import {AppString} from '../Const'
 import Header from '../Header/Header'
 import moment from 'moment'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Login() {
+export default function Login() {
     const provider = new firebase.auth.GoogleAuthProvider()
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +62,8 @@ function Login() {
                             localStorage.setItem(AppString.PENDING, [])
                             localStorage.setItem(AppString.FRIENDS, [])
                             setIsLoading(false)
-                            history.push('/main');
+                            toast.success('Login success')
+                            history.push('/main')
                         })
                         .then(
                             myFirestore
@@ -96,14 +98,16 @@ function Login() {
                         AppString.MY_LANGUAGE,
                         result.docs[0].data().myLanguage
                     )
-                    setIsLoading(false);
-                    history.push('/main');
+                    setIsLoading(false)
+                    toast.success('Login success')
+                    history.push('/main')
                 }
+            } else {
+                toast.error('User info not available')
             }
-            setIsLoading(false)
-            history.push('/main')
         })
         .catch(err => {
+            toast.error(err.message)
             setIsLoading(false)
         })
     }
@@ -137,7 +141,7 @@ function Login() {
             .doc(timestamp)
             .set(itemMessage)
             .catch(err => {
-                // this.props.showToast(0, err.toString())
+                toast.error(err.toString())
             })
     }
 
@@ -165,5 +169,3 @@ function Login() {
             </div>
     )
 }
-
-export default withRouter(Login)

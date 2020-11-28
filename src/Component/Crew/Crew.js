@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import ReactLoading from 'react-loading'
-import {withRouter} from 'react-router-dom'
 import {myFirestore} from '../../Config/MyFirebase'
 import './Crew.css'
 import {AppString} from './../Const'
@@ -8,8 +7,10 @@ import Header from './../Header/Header'
 import UserList from './UserList'
 import {listLanguagesWithTarget} from '../../Config/MyTranslate.js'
 import Confirmation from '../Confirmation/Confirmation'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Crew(props) {
+export default function Crew(props) {
     const [isLoading, setLoading] = useState(true);
     const [isOpenReportConfirm, setOpenReportConfirm] = useState(false)
     const [isOpenUnreportConfirm, setOpenUnreportConfirm] = useState(false)
@@ -62,6 +63,7 @@ function Crew(props) {
             .doc(currentUserId)
             .set({id: currentUserId})).then(
         getListUser())
+        toast.success(`Invited ${user.data().nickname} to your crew`)
     }
 
     const uninvite = (user) => {
@@ -80,6 +82,7 @@ function Crew(props) {
             .delete()).then(
         getListUser())
         setOpenUninviteConfirm(false)
+        toast.warn(`Removed your invite of ${user.data().nickname}`)
     }
 
     const askUninvite = (user) => {
@@ -114,6 +117,7 @@ function Crew(props) {
             .doc(user.id)
             .delete()).then(
         getListUser())
+        toast.success(`Added ${user.data().nickname} to your crew`)
     }
 
     const declineInvite = (user) => {
@@ -131,6 +135,7 @@ function Crew(props) {
             .doc(currentUserId)
             .delete()).then(
         getListUser())
+        toast.warn(`Declined ${user.data().nickname}'s invitation`)
     }
 
     const report = (user) => {
@@ -143,6 +148,7 @@ function Crew(props) {
             .set({id: user.id}).then(
         getListUser())
         setOpenReportConfirm(false)
+        toast.warn(`Reported ${user.data().nickname}`)
     }
 
     const askReport = (user) => {
@@ -160,6 +166,7 @@ function Crew(props) {
             .delete().then(
         getListUser())
         setOpenUnreportConfirm(false)
+        toast.warn(`Remove your report of ${user.data().nickname}`)
     }
 
     const askUnreport = (user) => {
@@ -219,5 +226,3 @@ function Crew(props) {
         </div>
     )
 }
-
-export default withRouter(Crew)

@@ -9,7 +9,8 @@ import {AppString} from './../Const'
 import StickerSelect from './StickerSelect'
 import ListOfMessages from './ListOfMessages'
 import Confirmation from '../Confirmation/Confirmation'
-// import { useHistory } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //Only works properly as a component for now
 export default class ChatBoard extends Component {
@@ -28,7 +29,6 @@ export default class ChatBoard extends Component {
         this.groupChatId = null
         this.removeListener = null
         this.currentPhotoFile = null
-        // this.history = useHistory();
     }
 
     componentDidUpdate() {
@@ -124,7 +124,7 @@ export default class ChatBoard extends Component {
                 this.setState({inputValue: ''})
             })
             .catch(err => {
-                this.props.showToast(0, err.toString())
+                toast.error(err.toString())
             })
     }
 
@@ -212,6 +212,7 @@ export default class ChatBoard extends Component {
             this.setState({isOpenReportConfirm: false})
         this.remove()
         this.hideReport()
+        toast.warn(`Reported ${this.currentPeerUser.nickname}`)
     }
 
     remove = () => {
@@ -228,7 +229,7 @@ export default class ChatBoard extends Component {
             .collection(AppString.FRIENDS)
             .doc(this.currentUserId)
             .delete())
-        this.currentPeerUser = null
+        toast.warn(`Removed ${this.currentPeerUser.nickname} from your crew`)
         this.props.history.push('/')
     }
 

@@ -8,6 +8,8 @@ import Button from './Button'
 import Confirmation from '../Confirmation/Confirmation'
 import {myFirestore} from '../../Config/MyFirebase'
 import { Badge, withStyles } from '@material-ui/core';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Header(props) {
@@ -38,9 +40,11 @@ export default function Header(props) {
         .signOut()
         .then(() => {
             localStorage.clear()
+            toast.success('Logout success')
             history.push('/')
         })
         .catch(function (err) {
+            toast.error(err.message)
         })
     }
 
